@@ -1,6 +1,6 @@
 # About
 
-![My First Solo – Guess the Song](/blog/amateur-radio/assets/school-1024x825.jpg)
+![My First Solo – Guess the Song](/blog/assets/school-1024x825.jpg)
 
 Born in [New Jersey](http://weirdnj.com/) then moved to [New York](http://www.weirdus.com/states/new_york/index.php) in my teenage years. I could have been a professional saxophone player having played since childhood but technology won out in the end.
 
