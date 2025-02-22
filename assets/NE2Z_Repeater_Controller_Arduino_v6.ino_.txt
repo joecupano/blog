@@ -1,0 +1,387 @@
+/*
+
+ NE2Z Repeater Controller Arduino v-05
+ 30 April 2013 
+ 
+ LCD Display added in place of Serial Port debug
+ LCD Code is from
+
+ http://www.arduino.cc/en/Tutorial/LiquidCrystal
+
+
+*/
+ 
+//#include <avr/wdt.h>
+//#include <avr/interrupt.h>
+//#include <avr/io.h>
+//#include <avr/progmem.h>
+
+// include the library code:
+#include <LiquidCrystal.h>
+
+/*
+ TABLE OF SECTIONS
+ -------------------------------
+ 0 - MORSE SETUP
+ 1 - PIN ASSIGNMENTS
+ 2 - CIRCUIT ASSUMPTIONS
+ 3 - CONSTANTS AND VARIABLE SETTINGS
+ 4 - SUBROUTINES
+ 4.1 SIGNALING
+ - SIGNAL_ON
+ - SIGNAL_SUSTAIN
+ - SIGNAL_TAIL
+ - SIGNAL_OFF
+ 4.2 COURTESYTONE
+ 4.3 TIMEOUT
+ - TIMEOUT
+ - TIMEOUT_CLEAR   - Check if input is clear
+ 4.4 ID
+ - ID_IDLE         - Main CW Ident. Sent when repeater has been quiet or timed-out
+ - ID_ACTIVE       - Fast CW Ident. Sent when repeater active
+ 4.5 MORSE
+ 5 - REPEATER SETUP void (setup)
+ 6 - MAIN  void (loop)
+ 
+ */
+
+
+//
+// 0 - MORSE SETUP
+// -------------------------------
+//
+// 1200/wpm = element-length in ms. A dot is one element, space between dots/dashes is one element, inter letter space is three elements, inter word space seven elements
+//
+
+
+
+
+//
+// 1 - PIN ASSIGNMENTS
+// -------------------------------
+//
+
+#define PIN_COR 8                            //COR PIN
+#define PIN_CTCSS 9                          //CTCSS PIN
+#define PIN_PTT 10                           //PTT PIN
+#define PIN_AUDIO 13                         //MUTE Audio PIN
+#define PIN_CWOUT 6                          //CW Tone out PIN
+#define PIN_TEMP 14                          //Temperature Sensor PIN
+#define PIN_TAMPER 15                        //Tamper Sensor PIN
+// initialize the library with the numbers of the interface pins
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+//
+//
+// 2 - CIRCUIT ASSUMPTIONS
+// ------------------------------
+//
+/*
+
+CTCSS is delivered as logic from external circuit. Alternately, CTCSS can be
+handled by the BS2 by taking RX audio and pass it through a 741 op-amp to produce
+a square-wave have the BS2 COUNT that pin.
+
+All inputs active high with +V from the inputs (COR/CTCSS/Alarms) fed into an 2N2222A (or equiv)
+with the collector wired to +V. Emmitter is wired to the input pin with a 680 ohm resistor to GND
+ensuring the input pin is always low during it's idle state (erratic behaviour would occur otherwise).
+
+Power is 9-15v via a 7805 regulator.
+
+16x2 LCD display circuit is.  
+
+LCD RS pin to digital pin 12
+LCD Enable pin to digital pin 11
+LCD D4 pin to digital pin 5
+LCD D5 pin to digital pin 4
+LCD D6 pin to digital pin 3
+LCD D7 pin to digital pin 2
+LCD R/W pin to ground
+10K resistor:
+ends to +5V and ground
+wiper to LCD VO pin (pin 3)
+
+*/
+
+//
+// 3 - CONSTANTS AND VARIABLES SETTINGS
+// -------------------------------
+//
+// Morse Code Structure
+//
+
+#define CWSPEED  18                         // CW Words Per Minute
+#define CWPITCH 500                         // CW Pitch inHz
+#define DOTLEN   1200/CWSPEED               // CW Dot length
+#define DASHLEN  3*(1200/CWSPEED)           // CW Dash length
+#define DOTSPACE 1200/CWSPEED               // CW Dot space length
+#define WORDSPACE 3*(1200/CWSPEED)          // CW space between words
+
+//
+// Morse Message Structure
+//
+// 0 - Dot Space, 1 - Dot, 2 - Dash, 3 - Word space
+//
+// KD2ANX/R
+// 2,0,1,0,2,3,2,0,1,0,1,3,1,0,1,0,2,0,2,0,2,3,1,0,2,0,3,2,0,1,3,2,0,1,0,1,0,2,3,2,0,1,0,1,0,2,0,1,3,1,0,2,0,1
+// ( 54 characters )
+//
+int CALLSIGN [] = {2,0,1,0,2,3,2,0,1,0,1,3,1,0,1,0,2,0,2,0,2,3,1,0,2,0,3,2,0,1,3,2,0,1,0,1,0,2,3,2,0,1,0,1,0,2,0,1,3,1,0,2,0,1};
+int CALLSIGNLENGTH = 54;
+
+// ROCK TAVERN, NY
+// 1,0,2,0,1,3,2,0,2,0,2,3,2,0,1,0,2,0,1,3,2,0,1,0,2,3,2,3,1,0,2,3,1,0,1,0,1,0,2,3,1,3,1,0,2,0,1,3,2,0,1,3,2,0,2,0,1,0,1,0,2,0,2,3,2,0,1,3,2,0,1,0,2,0,2
+// ( 75 characters )
+//
+
+//
+// Global Variables (Currently at test values)
+//
+
+
+int BEEP_FREQ = 1000;                       // Beep Tone frequency in Hz
+int BEEP_DUR = 50;                         // Beep Tone Duration in ms
+int ID_TIMEOUT = 6000;                    // ID Timer in ms (10 minutes)
+int TO_TIMEOUT = 180;                     // Timeout Duration in ms (3 minutes)
+int TAIL_TIMEOUT = 30;                    // Tail in ms (3 seconds)
+int BEEP_DELAY = 1;                         // Delay til Beep (500 ms)
+int ID_COUNTER = 0;                         // Reset ID Counter
+int TO_COUNTER = 0;                         // Reset Timeout
+int TAIL_COUNTER = 0;                       // Reset Tail
+int TX_STATE = 0;                           // Transmitter state is off
+int IDLE_STATE = 0;                         // Set Repeater has not been idle since ID
+int ID_STATE = 0;                           // Not Time to ID
+
+
+
+//
+// 4 - SUBROUTINES
+// ---------------------------------
+//
+
+void SIGNAL_ON () {
+  IDLE_STATE = 0;                                         // Repeater no longer idle
+  digitalWrite(PIN_AUDIO, HIGH);                          // Enable Audio
+  digitalWrite(PIN_PTT, HIGH);                            // Turn ON the transmitter
+  TX_STATE = 1;                                           // TX State set ON
+}
+
+void SIGNAL_SUSTAIN () {
+  TO_COUNTER = TO_COUNTER + 1;                            // Increment the Timeout Timer
+  if (TO_COUNTER == TO_TIMEOUT) {                         // Go to Timeout if expired
+    TIMEOUT ();
+  }
+  if (ID_COUNTER == ID_TIMEOUT) {                          // Send the Active CW ID
+    ID_ACTIVE ();
+  }
+}
+
+void SIGNAL_TAIL () {
+  TAIL_COUNTER = TAIL_COUNTER + 1;                        // Increment Tail Time
+  if (TAIL_COUNTER = BEEP_DELAY) {                        // Send a Beep 
+    COURTESYTONE();
+  }
+  if (TAIL_COUNTER == TAIL_TIMEOUT) {                     // Tail timout reached ?
+    SIGNAL_OFF ();
+  }
+}
+
+void SIGNAL_OFF () {
+  digitalWrite(PIN_AUDIO, LOW);                           // Disable Audio
+  digitalWrite(PIN_PTT, LOW);                             // Turn OFF the transmitter
+  TX_STATE = 0;                                           // TX State set OFF 
+  TO_COUNTER = 0;                                         // TReset Timeout Timer
+  TAIL_COUNTER = 0;                                       // Reset Tail Timer
+  //DEBUG CLS
+}
+
+void COURTESYTONE () {
+  tone(PIN_CWOUT, BEEP_FREQ, BEEP_DUR);
+}
+
+void TIMEOUT () {
+  //DEBUG CRSRXY, 18, 1, "TO: Time Out!"
+  // Wait 250ms
+  // CW Message string to ssend that we are timing out  "T O T"
+  // morse active routine
+  // Pause 500ms
+  digitalWrite(PIN_AUDIO, LOW);                           // Turn OFF Audio
+  digitalWrite(PIN_PTT, LOW);                             // Turn OFF Transmitter
+  TX_STATE = 0;                                           // TX State set OFF 
+  // Pause 1 second
+
+  do                                                      // Check to see if the COR has dropped
+  {                                                       // INSERT SOMETHING THAT LISTENS FOR CONTROLOP CONTROLS
+    // Waiting for COR to drop
+  } 
+  while (digitalRead(PIN_COR) == 1);                    // Loop until COR has dropped
+
+  // DEBUG CRSRXY, 18, 1, "TO: Resetting"
+  TO_COUNTER = 0;                                         // Reset Timeout Timer
+  ID_COUNTER = ID_TIMEOUT;                                // Need to ID
+  // Pause 500mS
+  //DEBUG CLS
+}
+
+void ID_IDLE () {
+  //PAUSE 500ms
+  TX_STATE = 1;
+  digitalWrite(PIN_PTT, HIGH);                            // Turn on the transmitter
+  digitalWrite(PIN_AUDIO, HIGH);                          // Turn on the Audio
+  // DEBUG CLS
+  // GOSUB SER_DISPLAY
+  // DEBUG CRSRXY, 18, 2, "ID: Idle"
+  // CW Message string to send as ID  "KD2ANX/R"
+  SER_DISPLAY();
+  MY_LCD_DISPLAY();
+  MORSE ();
+  ID_COUNTER = 0;                                         // Reset ID Timer
+  ID_STATE = 0;
+  // PAUSE 500                                            // Wait 500mS
+  digitalWrite(PIN_PTT, LOW);                             // Turn off the transmitter
+  digitalWrite(PIN_AUDIO, LOW);                           // Turn off the Audio
+  TX_STATE = 0;
+  IDLE_STATE = 1;                                         // Repeater has been idle
+  // DEBUG CLS
+}
+
+void ID_ACTIVE () {
+  //PAUSE 500ms
+  //DEBUG CLS
+  // GOSUB SER_DISPLAY
+  // DEBUG CRSRXY, 18, 2, "ID: Active"
+  // CW Message string to send as ID  "KD2ANX/R"
+  // morse active routine
+  // PAUSE 500ms
+  SER_DISPLAY();
+  MY_LCD_DISPLAY();
+  MORSE ();
+  ID_COUNTER = 0;                                        // Reset ID Timer
+  ID_STATE = 0;                                          // Repeater has not been idle
+  // DEBUG CLS
+}
+
+void MORSE () {
+  //
+  for ( int i = 0; i < 54; i++) {
+    switch (CALLSIGN [i]) {
+      case 0:
+        tone(PIN_CWOUT, 0, DOTSPACE);
+      case 1:
+        tone(PIN_CWOUT, CWPITCH, DOTLEN);
+      case 2:
+        tone(PIN_CWOUT, CWPITCH, DASHLEN);
+      case 3:
+        tone(PIN_CWOUT, 0, WORDSPACE);
+    }  
+  }
+}
+
+void SER_DISPLAY () {
+  Serial.println ("\x1B[H");                  // Home in Putty (VT100)
+  //Serial.println ("\x1B[2J");                 // CLS in Putty (VT100)
+  Serial.print ("[2J");
+  Serial.println("Welcome to the KD2ANX Repeater");
+  Serial.print("TX: ");
+  Serial.print(TX_STATE);                     // Display Transitter (TX) State
+  Serial.print(" - TO: ");
+  Serial.println(TO_COUNTER);                 // Display Timeout counter
+  Serial.print("ID: ");
+  Serial.print(ID_STATE);                     // Display ID state
+  Serial.print(" - ID: ");
+  Serial.println(ID_COUNTER);                 // Display ID counter
+}
+
+void MY_LCD_DISPLAY () {
+  // set the cursor to column 0, line 1
+  // (note: line 1 is the second row, since counting begins with 0):
+  lcd.setCursor(8, 0);
+  if (TX_STATE == 1) {
+    lcd.print("TX ");
+    lcd.print(TO_COUNTER);
+  } else {
+    lcd.print("RX");
+  }   
+  lcd.setCursor(8, 1);
+  if (ID_STATE == 1) {
+    lcd.print("ID ");
+  } else {
+    lcd.print("NID");
+    lcd.print(ID_COUNTER);
+  } 
+}
+
+
+//
+// 5 - REPEATER SETUP
+// ---------------------------------
+//
+
+
+void setup() {
+  //
+  //DEBUG HOME, "Welcome TO KD2ANX Repeater"
+  //
+  pinMode (PIN_COR, INPUT);
+  pinMode (PIN_CTCSS, INPUT);
+  pinMode (PIN_TEMP, INPUT);
+  pinMode (PIN_TAMPER, INPUT);
+  pinMode (PIN_PTT, OUTPUT);
+  pinMode (PIN_AUDIO, OUTPUT);
+  //pinMode (PIN_CWOUT, OUTPUT);
+
+  // Set it low by default
+  digitalWrite(PIN_PTT, LOW);
+  digitalWrite(PIN_AUDIO, LOW);
+  //digitalWrite(PIN_CWOUT, LOW);
+
+  Serial.begin(9600);
+
+  // set up the LCD's number of columns and rows:
+  lcd.begin(16, 2);
+  // Print a message to the LCD.
+  lcd.print("KD2ANX");
+
+  ID_COUNTER = ID_TIMEOUT;                   // ID on start
+  TO_COUNTER = 0;                            // Reset Timeout Timer
+  TX_STATE = 0;                              // Transmitter State is off
+  ID_STATE = 1;                              // ID on start-up
+}
+
+
+//
+// 6 - MAIN
+// ---------------------------------
+//
+
+void loop (){
+  SER_DISPLAY ();
+  MY_LCD_DISPLAY ();
+  
+  //IF PIN_TAMPER = 1 THEN TAMPERED
+  //IF PIN_TEMP = 1 THEN VERYHOT
+
+  if (digitalRead(PIN_COR) == 1 && TX_STATE == 0) {
+    SIGNAL_ON();
+  }
+
+  if (digitalRead(PIN_COR) == 1 && TX_STATE == 1) {
+    SIGNAL_SUSTAIN();
+  }
+
+  if (digitalRead(PIN_COR) == 0 && TX_STATE == 1) {
+    SIGNAL_TAIL();
+  }
+
+  if (TAIL_COUNTER == TAIL_TIMEOUT && TX_STATE == 1) {
+    SIGNAL_OFF();
+  }
+
+  if (ID_COUNTER == ID_TIMEOUT) {
+    ID_IDLE();
+  } 
+  // Send the Idle CW ID
+  ID_COUNTER = ID_COUNTER + 1;                                         // Increment the CW ID Timer
+}
+
+

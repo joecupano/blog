@@ -1,0 +1,314 @@
+'
+'
+'{$STAMP BS2}
+'{$PBASIC 2.5}
+'{$PORT COM4}
+'
+'
+'
+' NE2Z REPEATER CONTROLLER  v0.8  -  10 April 2013
+' =====================================================================================
+'
+' Special thanks and inspiration from M0PZT work at http://www.m0pzt.com/M0PZT%20Repeater%20Logic%20New.bs2
+'
+' TABLE OF SECTIONS
+' -------------------------------
+' 1 - PIN ASSIGNMENTS
+' 2 - CIRCUIT ASSUMPTIONS
+' 3 - VARIABLE SETTINGS
+' 4 - REPEATER SETUP
+' 5 - MAIN
+' 6 - SUBROUTINES
+' 6.1 SIGNALING
+'   - SIGNAL_ON
+'   - SIGNAL_SUSTAIN
+'   - SIGNAL_TAIL
+'   - SIGNAL_OFF
+' 6.2 COURTESY
+'   - BEEPTONE
+' 6.3 TIMEOUT
+'   - TIMEOUT
+'   - TIMEOUT_CLEAR   - Check if input is clear
+' 6.4 ID
+'   - ID_IDLE         - Main CW Ident. Sent when repeater has been quiet or timed-out
+'   - ID_ACTIVE       - Fast CW Ident. Sent when repeater active
+' 6.5 MORSE
+'   - MORSE           - Slower CW Speed
+'   - MORSE_ACTIVE    - Faster CW Speed
+' -------------------------------
+'
+
+
+'
+' 1 - PIN ASSIGNMENTS
+' -------------------------------
+'
+PIN_COR PIN 0                          'COR PIN
+PIN_CTCSS PIN 1                        'CTCSS PIN
+PIN_TEMP PIN 2                         'Temperature Sensor PIN
+PIN_TAMPER PIN 3                       'Tamper Sensor PIN
+PIN_PTT PIN 5                          'PTT PIN
+PIN_AUDIO PIN 6                        'MUTE Audio PIN
+PIN_CWOUT PIN 7                        'CW Tone out PIN
+'
+INPUT PIN_COR
+INPUT PIN_CTCSS
+INPUT PIN_TEMP
+INPUT PIN_TAMPER
+OUTPUT PIN_PTT
+OUTPUT PIN_AUDIO
+OUTPUT PIN_CWOUT
+
+
+'
+' 2 - CIRCUIT ASSUMPTIONS
+' ------------------------------
+'
+' CTCSS is delivered as logic from external circuit. Alternately, CTCSS can be
+' handled by the BS2 by taking RX audio and pass it through a 741 op-amp to produce
+' a square-wave have the BS2 COUNT that pin.
+'
+' All inputs active high with +V from the inputs (COR/CTCSS/Alarms) fed into an 2N2222A (or equiv)
+' with the collector wired to +V. Emmitter is wired to the input pin with a 680 ohm resistor to GND
+' ensuring the input pin is always low during it's idle state (erratic behaviour would occur otherwise).
+'
+' Power is 9-15v via a 7805 regulator.
+'
+
+
+'
+' 3 - VARIABLE SETTINGS
+' -------------------------------
+'
+' Timing reference  300=30sec, 600=1MIN, 3000=5mins, 6000=10mins, 9000=15mins etc
+'
+ID_TIMEOUT CON 300                       'ID Timer (10 minutes)
+TO_TIMEOUT CON 90                        'Timeout Duration (3 minutes)
+TAIL_TIMEOUT CON 20                      'Tail  (3 seconds)
+BEEP_DELAY CON 2                         'Delay til Beep (500 ms)
+TONE CON 1750                            'CW Ident Frequency: 1750Hz
+I VAR Byte                               'Variable for FOR-NEXT Loops
+ID_COUNTER VAR Word                      'ID Counter
+TO_COUNTER VAR Word                      'Timeout Counter
+TAIL_COUNTER VAR Byte                    'Tail Counter
+CHARACTER VAR Bit                        'CW Character
+TX_STATE VAR Bit                         'Transmitter State 1=On 0=Off
+ID_STATE VAR Bit                         'Time to ID State 1=Yes 0=No
+IDLE_STATE VAR Bit                       'Was Repeater idle during ID Timer 1=Yes 0=No
+ID_COUNTER = 0                           'Reset ID Counter
+IDLE_STATE = 0
+TO_COUNTER = 0                           'Reset Timeout
+TAIL_COUNTER = 0                         'Reset Tail
+TX_STATE = 0                             'Transmitter state is off
+ID_STATE = 0                             'Not Time to ID
+
+'
+' 4 - REPEATER SETUP
+' ---------------------------------
+'
+REPEATER_SETUP:
+'
+'DEBUG HOME, "Welcome TO KD2ANX Repeater"
+'
+LOW PIN_PTT
+LOW PIN_AUDIO
+ID_COUNTER = ID_TIMEOUT                   ' ID on start
+IDLE_STATE = 0                            ' Say Repeater was not idle on startup
+TO_COUNTER = 0                            ' Reset Timeout Timer
+TAIL_COUNTER = 0                          ' Reset Tail
+TX_STATE = 0                              ' Transmitter State is Off
+ID_STATE = 1                              ' ID on start-up
+
+'
+' 5 - MAIN
+' ---------------------------------
+'
+
+LISTENING:
+GOSUB SER_DISPLAY
+'IF PIN_TAMPER = 1 THEN TAMPERED
+'IF PIN_TEMP = 1 THEN VERYHOT
+IF PIN_COR = 1 AND TX_STATE = 0 THEN GOSUB SIGNAL_ON
+IF PIN_COR = 0 AND TX_STATE = 1 THEN GOSUB SIGNAL_TAIL
+IF PIN_COR = 1 AND TX_STATE = 1 THEN GOSUB SIGNAL_SUSTAIN
+IF (ID_COUNTER > ID_TIMEOUT) AND (IDLE_STATE = 0) THEN
+  GOSUB ID_IDLE                                                          ' Send the Idle CW ID
+ELSEIF (ID_COUNTER > ID_TIMEOUT) AND (IDLE_STATE = 1) THEN
+  ID_COUNTER = 0
+  DEBUG CLS                                                         ' No ID since repeater has been idle
+ENDIF
+ID_COUNTER = ID_COUNTER + 1                                               ' Increment the CW ID Timer
+GOTO LISTENING
+
+
+'
+' 6 - SUBROUTINES
+' ---------------------------------
+'
+
+'
+' 6.1 - SIGNAL
+' ---------------------------------
+'
+SIGNAL_ON:                                             ' Turn TX ON
+IDLE_STATE = 0                                         ' Repeater no longer idle
+HIGH PIN_AUDIO                                         ' Enable Audio
+HIGH PIN_PTT                                           ' Turn ON the transmitter
+TX_STATE = 1                                           ' TX State set ON
+
+
+SIGNAL_SUSTAIN:
+TO_COUNTER = TO_COUNTER + 1                            ' Increment the Timeout Timer
+IF TO_COUNTER > TO_TIMEOUT THEN GOSUB TIMEOUT          ' Go to Timeout if expired
+IF ID_COUNTER > ID_TIMEOUT THEN GOSUB ID_ACTIVE        ' Send the Active CW ID
+RETURN
+
+
+SIGNAL_TAIL:
+TAIL_COUNTER = TAIL_COUNTER + 1                        ' Increment Tail Time
+IF TAIL_COUNTER = BEEP_DELAY THEN GOSUB BEEPTONE       ' Send a Beep              '
+IF TAIL_COUNTER < TAIL_TIMEOUT THEN RETURN             ' Return if Tail has not timedout
+
+
+SIGNAL_OFF:
+LOW PIN_AUDIO                                          ' Disable Audio
+LOW PIN_PTT                                            ' Turn OFF the transmitter
+TX_STATE = 0                                           ' TX State set OFF
+TO_COUNTER = 0                                         ' Reset Timeout Timer
+TAIL_COUNTER = 0                                       ' Reset Tail Timer
+DEBUG CLS
+RETURN
+
+
+'
+' 6.2 - COURTESY
+' ---------------------------------
+'
+BEEPTONE:
+FREQOUT PIN_CWOUT,250,TONE                             ' Sends "T"
+RETURN
+
+
+'
+' 6.3 - TIMEOUT
+' ---------------------------------
+'
+TIMEOUT:
+DEBUG CRSRXY, 18, 1, "TO: Time Out!"
+PAUSE 250                                             ' Wait 250mS
+FOR I = 0 TO 21
+LOOKUP I, [1,1,1,1,0,0,1,1,1,1,0,0,1,1,1,1,0,0,1,1,1,1],CHARACTER
+GOSUB MORSE_ACTIVE
+NEXT
+PAUSE 500                                             ' Wait 500ms
+LOW PIN_PTT                                           ' Turn off the transmitter
+LOW PIN_AUDIO                                         ' Turn of Audio
+TX_STATE = 0
+PAUSE 1000                                            ' Wait 1 second
+
+TIMEOUT_CLEAR:                                        ' We'll check to see if the input is clear, so send "OK" and closedown
+IF PIN_COR = 1 THEN TIMEOUT_CLEAR                     ' The input is still blocked, so repeat this section
+DEBUG CRSRXY, 18, 1, "TO: Resetting"
+TO_COUNTER = 0                                        ' Reset Timeout Timer
+ID_COUNTER = ID_TIMEOUT                               ' Need to ID
+PAUSE 500                                             ' Wait 500mS
+DEBUG CLS
+RETURN
+
+
+'
+' 6.4 - ID
+' ---------------------------------
+'
+ID_IDLE:                                              ' This ID sent when idle or on start
+PAUSE 500
+TX_STATE = 1
+HIGH PIN_PTT                                          ' Turn on the transmitter
+HIGH PIN_AUDIO                                        ' Turn on the Audio
+DEBUG CLS
+GOSUB SER_DISPLAY
+DEBUG CRSRXY, 18, 2, "ID: Idle"
+FOR I = 0 TO 34 ' KD2ANX/R
+LOOKUP I, [2,1,2,0,2,1,1,0,1,1,2,2,2,0,1,2,0,2,1,1,0,2,1,1,2,0,2,1,1,2,1,0,1,2,1],CHARACTER
+GOSUB MORSE
+NEXT
+ID_COUNTER = 0                                        ' Reset ID Timer
+ID_STATE = 0
+PAUSE 500                                             ' Wait 500mS
+LOW PIN_PTT                                           ' Turn off the transmitter
+LOW PIN_AUDIO                                         ' Turn off the Audio
+TX_STATE = 0
+IDLE_STATE = 1                                        ' Repeater has been idle
+DEBUG CLS
+RETURN
+
+
+ID_ACTIVE:                                            ' This ID sent when active
+PAUSE 500
+DEBUG CLS
+GOSUB SER_DISPLAY
+DEBUG CRSRXY, 18, 2, "ID: Active"
+FOR I = 0 TO 34 ' KD2ANX/R
+LOOKUP I, [2,1,2,0,2,1,1,0,1,1,2,2,2,0,1,2,0,2,1,1,0,2,1,1,2,0,2,1,1,2,1,0,1,2,1],CHARACTER
+GOSUB MORSE_ACTIVE
+NEXT
+PAUSE 500                                             ' Wait 500mS
+ID_COUNTER = 0                                        ' Reset ID Timer
+ID_STATE = 0                                          ' Repeater has not been idle
+DEBUG CLS
+RETURN
+
+
+'
+' 6.5 - MORSE
+' ---------------------------------
+'
+'
+' Morse Code Generation
+' 2=DAH 1=DIT 0=SPACE
+'
+MORSE:                                                ' This section defines the Idle CW Speed
+BRANCH CHARACTER,[SPACE,DIT,DAH]
+RETURN
+DAH:
+FREQOUT PIN_CWOUT,190,TONE                                ' 190mS for a DAH
+PAUSE 55                                              ' 55mS between each tone
+RETURN
+DIT:
+FREQOUT PIN_CWOUT,65,TONE                                 ' 65mS for a DIT
+PAUSE 55                                              ' 55mS between each tone
+RETURN
+SPACE:
+PAUSE 150                                             ' 150mS for a letter-gap
+RETURN
+
+
+MORSE_ACTIVE:                                         ' This section defines the Active CW Speed
+BRANCH CHARACTER,[SPACEa,DITa,DAHa]
+RETURN
+DAHa:
+FREQOUT PIN_CWOUT,150,TONE                            ' 150mS for a fast DAH
+PAUSE 50
+RETURN
+DITa:
+FREQOUT PIN_CWOUT,50,TONE                             ' 50mS for a fast DIT
+PAUSE 50
+RETURN
+SPACEa:
+PAUSE 150                                             ' 150mS for a fast word-gap
+RETURN
+
+
+'
+' 6.6 - Serial Display
+' ---------------------------------
+'
+'
+SER_DISPLAY:
+DEBUG CRSRXY, 0, 0, "Welcome to the KD2ANX Repeater"
+DEBUG CRSRXY, 1, 1, "TX: ",DEC TX_STATE, " - TO: ",DEC TO_COUNTER   ' Display Timeout State, Counter
+DEBUG CRSRXY, 1, 2, "ID: ",DEC ID_STATE, " - ID: ",DEC ID_COUNTER   ' Display the ID State and Counter
+DEBUG CRSRXY, 1, 4, "IDLE: ",DEC IDLE_STATE
+RETURN
+
+END

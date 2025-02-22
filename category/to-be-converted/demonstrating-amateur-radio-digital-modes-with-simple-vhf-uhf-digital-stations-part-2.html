@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en-US"><head><meta charset="UTF-8"><title>
+Demonstrating Amateur Radio Digital Modes with simple VHF/UHF Digital Stations (Part 2) | Joe Cupano	</title><link rel="stylesheet" type="text/css" media="all" href="../../../../wp-content/themes/twentyten/style.css"><meta name="robots" content="max-image-preview:large"><style>img:is([sizes="auto" i], [sizes^="auto," i]) {contain-intrinsic-size:3000px 1500px}</style><link rel="stylesheet" id="wp-block-library-css" href="../../../../wp-includes/css/dist/block-library/style.min.css" type="text/css" media="all"><style id="wp-block-library-theme-inline-css" type="text/css">.wp-block-audio :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-audio :where(figcaption){color:#ffffffa6}.wp-block-audio{margin:0 0 1em}.wp-block-code{border:1px solid #ccc;border-radius:4px;font-family:Menlo,Consolas,monaco,monospace;padding:.8em 1em}.wp-block-embed :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-embed :where(figcaption){color:#ffffffa6}.wp-block-embed{margin:0 0 1em}.blocks-gallery-caption{color:#555;font-size:13px;text-align:center}.is-dark-theme .blocks-gallery-caption{color:#ffffffa6}:root :where(.wp-block-image figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme :root :where(.wp-block-image figcaption){color:#ffffffa6}.wp-block-image{margin:0 0 1em}.wp-block-pullquote{border-bottom:4px solid;border-top:4px solid;color:currentColor;margin-bottom:1.75em}.wp-block-pullquote cite,.wp-block-pullquote footer,.wp-block-pullquote__citation{color:currentColor;font-size:.8125em;font-style:normal;text-transform:uppercase}.wp-block-quote{border-left:.25em solid;margin:0 0 1.75em;padding-left:1em}.wp-block-quote cite,.wp-block-quote footer{color:currentColor;font-size:.8125em;font-style:normal;position:relative}.wp-block-quote:where(.has-text-align-right){border-left:none;border-right:.25em solid;padding-left:0;padding-right:1em}.wp-block-quote:where(.has-text-align-center){border:none;padding-left:0}.wp-block-quote.is-large,.wp-block-quote.is-style-large,.wp-block-quote:where(.is-style-plain){border:none}.wp-block-search .wp-block-search__label{font-weight:700}.wp-block-search__button{border:1px solid #ccc;padding:.375em .625em}:where(.wp-block-group.has-background){padding:1.25em 2.375em}.wp-block-separator.has-css-opacity{opacity:.4}.wp-block-separator{border:none;border-bottom:2px solid;margin-left:auto;margin-right:auto}.wp-block-separator.has-alpha-channel-opacity{opacity:1}.wp-block-separator:not(.is-style-wide):not(.is-style-dots){width:100px}.wp-block-separator.has-background:not(.is-style-dots){border-bottom:none;height:1px}.wp-block-separator.has-background:not(.is-style-wide):not(.is-style-dots){height:2px}.wp-block-table{margin:0 0 1em}.wp-block-table td,.wp-block-table th{word-break:normal}.wp-block-table :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-table :where(figcaption){color:#ffffffa6}.wp-block-video :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-video :where(figcaption){color:#ffffffa6}.wp-block-video{margin:0 0 1em}:root :where(.wp-block-template-part.has-background){margin-bottom:0;margin-top:0;padding:1.25em 2.375em}</style><style id="pdfemb-pdf-embedder-viewer-style-inline-css" type="text/css">.wp-block-pdfemb-pdf-embedder-viewer{max-width:none}</style><style id="classic-theme-styles-inline-css" type="text/css">.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}</style><style id="global-styles-inline-css" type="text/css">:root{--wp--preset--aspect-ratio--square:1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black:#000;--wp--preset--color--cyan-bluish-gray:#abb8c3;--wp--preset--color--white:#fff;--wp--preset--color--pale-pink:#f78da7;--wp--preset--color--vivid-red:#cf2e2e;--wp--preset--color--luminous-vivid-orange:#ff6900;--wp--preset--color--luminous-vivid-amber:#fcb900;--wp--preset--color--light-green-cyan:#7bdcb5;--wp--preset--color--vivid-green-cyan:#00d084;--wp--preset--color--pale-cyan-blue:#8ed1fc;--wp--preset--color--vivid-cyan-blue:#0693e3;--wp--preset--color--vivid-purple:#9b51e0;--wp--preset--color--blue:#06c;--wp--preset--color--medium-gray:#666;--wp--preset--color--light-gray:#f1f1f1;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple:linear-gradient(135deg,rgba(6,147,227,1) 0%,#9b51e0 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan:linear-gradient(135deg,#7adcb4 0%,#00d082 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange:linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red:linear-gradient(135deg,rgba(255,105,0,1) 0%,#cf2e2e 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray:linear-gradient(135deg,#eee 0%,#a9b8c3 100%);--wp--preset--gradient--cool-to-warm-spectrum:linear-gradient(135deg,#4aeadc 0%,#9778d1 20%,#cf2aba 40%,#ee2c82 60%,#fb6962 80%,#fef84c 100%);--wp--preset--gradient--blush-light-purple:linear-gradient(135deg,#ffceec 0%,#9896f0 100%);--wp--preset--gradient--blush-bordeaux:linear-gradient(135deg,#fecda5 0%,#fe2d2d 50%,#6b003e 100%);--wp--preset--gradient--luminous-dusk:linear-gradient(135deg,#ffcb70 0%,#c751c0 50%,#4158d0 100%);--wp--preset--gradient--pale-ocean:linear-gradient(135deg,#fff5cb 0%,#b6e3d4 50%,#33a7b5 100%);--wp--preset--gradient--electric-grass:linear-gradient(135deg,#caf880 0%,#71ce7e 100%);--wp--preset--gradient--midnight:linear-gradient(135deg,#020381 0%,#2874fc 100%);--wp--preset--font-size--small:13px;--wp--preset--font-size--medium:20px;--wp--preset--font-size--large:36px;--wp--preset--font-size--x-large:42px;--wp--preset--spacing--20:.44rem;--wp--preset--spacing--30:.67rem;--wp--preset--spacing--40:1rem;--wp--preset--spacing--50:1.5rem;--wp--preset--spacing--60:2.25rem;--wp--preset--spacing--70:3.38rem;--wp--preset--spacing--80:5.06rem;--wp--preset--shadow--natural:6px 6px 9px rgba(0,0,0,.2);--wp--preset--shadow--deep:12px 12px 50px rgba(0,0,0,.4);--wp--preset--shadow--sharp:6px 6px 0 rgba(0,0,0,.2);--wp--preset--shadow--outlined:6px 6px 0 -3px rgba(255,255,255,1) , 6px 6px rgba(0,0,0,1);--wp--preset--shadow--crisp:6px 6px 0 rgba(0,0,0,1)}:where(.is-layout-flex){gap:.5em}:where(.is-layout-grid){gap:.5em}body .is-layout-flex{display:flex}.is-layout-flex{flex-wrap:wrap;align-items:center}.is-layout-flex > :is(*, div){margin:0}body .is-layout-grid{display:grid}.is-layout-grid > :is(*, div){margin:0}:where(.wp-block-columns.is-layout-flex){gap:2em}:where(.wp-block-columns.is-layout-grid){gap:2em}:where(.wp-block-post-template.is-layout-flex){gap:1.25em}:where(.wp-block-post-template.is-layout-grid){gap:1.25em}.has-black-color{color:var(--wp--preset--color--black)!important}.has-cyan-bluish-gray-color{color:var(--wp--preset--color--cyan-bluish-gray)!important}.has-white-color{color:var(--wp--preset--color--white)!important}.has-pale-pink-color{color:var(--wp--preset--color--pale-pink)!important}.has-vivid-red-color{color:var(--wp--preset--color--vivid-red)!important}.has-luminous-vivid-orange-color{color:var(--wp--preset--color--luminous-vivid-orange)!important}.has-luminous-vivid-amber-color{color:var(--wp--preset--color--luminous-vivid-amber)!important}.has-light-green-cyan-color{color:var(--wp--preset--color--light-green-cyan)!important}.has-vivid-green-cyan-color{color:var(--wp--preset--color--vivid-green-cyan)!important}.has-pale-cyan-blue-color{color:var(--wp--preset--color--pale-cyan-blue)!important}.has-vivid-cyan-blue-color{color:var(--wp--preset--color--vivid-cyan-blue)!important}.has-vivid-purple-color{color:var(--wp--preset--color--vivid-purple)!important}.has-black-background-color{background-color:var(--wp--preset--color--black)!important}.has-cyan-bluish-gray-background-color{background-color:var(--wp--preset--color--cyan-bluish-gray)!important}.has-white-background-color{background-color:var(--wp--preset--color--white)!important}.has-pale-pink-background-color{background-color:var(--wp--preset--color--pale-pink)!important}.has-vivid-red-background-color{background-color:var(--wp--preset--color--vivid-red)!important}.has-luminous-vivid-orange-background-color{background-color:var(--wp--preset--color--luminous-vivid-orange)!important}.has-luminous-vivid-amber-background-color{background-color:var(--wp--preset--color--luminous-vivid-amber)!important}.has-light-green-cyan-background-color{background-color:var(--wp--preset--color--light-green-cyan)!important}.has-vivid-green-cyan-background-color{background-color:var(--wp--preset--color--vivid-green-cyan)!important}.has-pale-cyan-blue-background-color{background-color:var(--wp--preset--color--pale-cyan-blue)!important}.has-vivid-cyan-blue-background-color{background-color:var(--wp--preset--color--vivid-cyan-blue)!important}.has-vivid-purple-background-color{background-color:var(--wp--preset--color--vivid-purple)!important}.has-black-border-color{border-color:var(--wp--preset--color--black)!important}.has-cyan-bluish-gray-border-color{border-color:var(--wp--preset--color--cyan-bluish-gray)!important}.has-white-border-color{border-color:var(--wp--preset--color--white)!important}.has-pale-pink-border-color{border-color:var(--wp--preset--color--pale-pink)!important}.has-vivid-red-border-color{border-color:var(--wp--preset--color--vivid-red)!important}.has-luminous-vivid-orange-border-color{border-color:var(--wp--preset--color--luminous-vivid-orange)!important}.has-luminous-vivid-amber-border-color{border-color:var(--wp--preset--color--luminous-vivid-amber)!important}.has-light-green-cyan-border-color{border-color:var(--wp--preset--color--light-green-cyan)!important}.has-vivid-green-cyan-border-color{border-color:var(--wp--preset--color--vivid-green-cyan)!important}.has-pale-cyan-blue-border-color{border-color:var(--wp--preset--color--pale-cyan-blue)!important}.has-vivid-cyan-blue-border-color{border-color:var(--wp--preset--color--vivid-cyan-blue)!important}.has-vivid-purple-border-color{border-color:var(--wp--preset--color--vivid-purple)!important}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background:var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple)!important}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background:var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan)!important}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background:var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange)!important}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background:var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red)!important}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background:var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray)!important}.has-cool-to-warm-spectrum-gradient-background{background:var(--wp--preset--gradient--cool-to-warm-spectrum)!important}.has-blush-light-purple-gradient-background{background:var(--wp--preset--gradient--blush-light-purple)!important}.has-blush-bordeaux-gradient-background{background:var(--wp--preset--gradient--blush-bordeaux)!important}.has-luminous-dusk-gradient-background{background:var(--wp--preset--gradient--luminous-dusk)!important}.has-pale-ocean-gradient-background{background:var(--wp--preset--gradient--pale-ocean)!important}.has-electric-grass-gradient-background{background:var(--wp--preset--gradient--electric-grass)!important}.has-midnight-gradient-background{background:var(--wp--preset--gradient--midnight)!important}.has-small-font-size{font-size:var(--wp--preset--font-size--small)!important}.has-medium-font-size{font-size:var(--wp--preset--font-size--medium)!important}.has-large-font-size{font-size:var(--wp--preset--font-size--large)!important}.has-x-large-font-size{font-size:var(--wp--preset--font-size--x-large)!important}:where(.wp-block-post-template.is-layout-flex){gap:1.25em}:where(.wp-block-post-template.is-layout-grid){gap:1.25em}:where(.wp-block-columns.is-layout-flex){gap:2em}:where(.wp-block-columns.is-layout-grid){gap:2em}:root :where(.wp-block-pullquote){font-size:1.5em;line-height:1.6}</style><link rel="stylesheet" id="twentyten-block-style-css" href="../../../../wp-content/themes/twentyten/blocks.css" type="text/css" media="all"><style type="text/css">.broken_link,a.broken_link{text-decoration:line-through}</style></head><body class="post-template-default single single-post postid-782 single-format-standard">
+<div id="wrapper" class="hfeed">
+	<div id="header">
+		<div id="masthead">
+			<div id="branding" role="banner">
+								<div id="site-title">
+					<span>
+						<a href="../../../../index.html" rel="home">Joe Cupano</a>
+					</span>
+				</div>
+				<div id="site-description">Just another opinion on tech, infosec, and ham radio</div>
+
+				<img src="../../../../wp-content/uploads/2016/08/cropped-cropped-cropped-cropped-cropped-wordpress-banner-cupano1-1.jpg" width="940" height="197" alt="Joe Cupano" srcset="../../../../wp-content/uploads/2016/08/cropped-cropped-cropped-cropped-cropped-wordpress-banner-cupano1-1.jpg 940w,../../../../wp-content/uploads/2016/08/cropped-cropped-cropped-cropped-cropped-wordpress-banner-cupano1-1-300x63.jpg 300w,../../../../wp-content/uploads/2016/08/cropped-cropped-cropped-cropped-cropped-wordpress-banner-cupano1-1-768x161.jpg 768w" sizes="(max-width: 940px) 100vw, 940px" decoding="async" fetchpriority="high"></div>
+
+			<div id="access" role="navigation">
+								<div class="skip-link screen-reader-text"><a href="#content">Skip to content</a></div>
+				<div class="menu-header"><ul id="menu-home-menu" class="menu"><li id="menu-item-135" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-135"><a href="../../../../index.html">Home</a></li>
+<li id="menu-item-123" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-123"><a href="../../../../about/index.html">About</a></li>
+<li id="menu-item-137" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-137"><a href="../../../../disclaimer/index.html">Disclaimer</a></li>
+<li id="menu-item-857" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-857"><a href="../../../../category/projects/index.html">Projects</a>
+<ul class="sub-menu"><li id="menu-item-860" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-860"><a href="../../../../hopexv-workshop/index.html">Amateur Radio Using Digital Modes (HOPE XV Workshop)</a></li>
+	<li id="menu-item-861" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-861"><a href="../../../../wp-content/uploads/2019/11/OCARC_KitBuilding_3-0_ext.pdf">Kit Building Presentation</a></li>
+	<li id="menu-item-864" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-864"><a href="../../../../wp-content/uploads/2019/03/S-Pixie-QRP-Kit-Student-Manual-v1-0.pdf">S Pixie QRP Student Manual</a></li>
+	<li id="menu-item-866" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-866"><a href="../../../../wp-content/uploads/2019/03/Field-Day-Logging-Network-Setup-2018.pdf">Field Day Network Logging</a></li>
+</ul></li>
+<li id="menu-item-849" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-849"><a href="../../../../archive/index.html">Archived Posts</a>
+<ul class="sub-menu"><li id="menu-item-855" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-855"><a href="../../../../archive/how-not-to-fear-cw-and-possibly-enjoy-it/index.html">How not to fear CW and possibly enjoy it</a></li>
+	<li id="menu-item-850" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-850"><a href="../../../../archive/infosec-as-a-career/index.html">How do I pursue Infosec as a career ?</a></li>
+	<li id="menu-item-851" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-851"><a href="../../../../archive/worst-denial-of-service-attack/index.html">One of the worst Denial of Service attacks never reported</a></li>
+	<li id="menu-item-852" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-852"><a href="../../../../archive/if-there-is-no-business-there-is-nothing-to-secure/index.html">If there is no business, there is nothing to secure</a></li>
+	<li id="menu-item-853" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-853"><a href="../../../../archive/seven-words-you-can-never-say-to-content-filters/index.html">Seven Words You Can Never Say to Content Filters</a></li>
+	<li id="menu-item-854" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-854"><a href="../../../../archive/my-qrp-project-complete/index.html">My QRP Project Complete</a></li>
+</ul></li>
+</ul></div>			</div>
+		</div>
+	</div>
+
+	<div id="main">
+
+		<div id="container">
+			<div id="content" role="main">
+
+			
+
+				<div id="nav-above" class="navigation">
+					<div class="nav-previous"><a href="../../../../2018/07/30/amateur-radio-hope-xii-epilogue/index.html" rel="prev"><span class="meta-nav">←</span> Amateur Radio @ HOPE XII – Epilogue</a></div>
+					<div class="nav-next"><a href="../../../../2018/12/27/packet-radio-connected-modes-with-the-baofeng-uv-5r/index.html" rel="next">Packet Radio connected-modes with the Baofeng UV-5R (Updated February 7, 2020) <span class="meta-nav">→</span></a></div>
+				</div>
+
+				<div id="post-782" class="post-782 post type-post status-publish format-standard hentry category-amateur-radio">
+					<h1 class="entry-title">Demonstrating Amateur Radio Digital Modes with simple VHF/UHF Digital Stations (Part 2)</h1>
+
+					<div class="entry-meta">
+						<span class="meta-prep meta-prep-author">Posted on</span> <a href="../../../../2018/11/09/demonstrating-amateur-radio-digital-modes-with-simple-vhf-uhf-digital-stations-part-2/index.html" title="11:06 am" rel="bookmark"><span class="entry-date">November 9, 2018</span></a> <span class="meta-sep">by</span> <span class="author vcard"><a class="url fn n" href="../../../../author/joe/index.html" title="View all posts by joe">joe</a></span>					</div>
+
+					<div class="entry-content">
+						<p>I know it has been quite a while since I’ve posted <a href="../../../../2018/04/23/digital-modes-with-vhfuhf_1/index.html" target="_blank" rel="noopener noreferrer">Part 1</a> of this blog about Digital Models with a simple station. Since then I spent time evolving Part 1 into the the <a href="../../../../hopexii-workshop/index.html" target="_blank" rel="noopener noreferrer">Amateur Radio Using Digital Modes Workshop</a> I ran at <a href="http://xii.hope.net/" target="_blank" rel="noopener noreferrer">HOPE XII</a> this past summer. As part of the preparation for the workshop I expected to have Part 2 completed and posted before then but I ran into technical issues which I will explain at the end of this post. Before continuing, I highly recommend you review the <a href="../../../../hopexii-workshop/index.html" target="_blank" rel="noopener noreferrer">workshop material</a> since it contains updated material since Part 1 plus providing a deeper dive.</p>
+<p>The exercises in Part 1 and the workshop focused on digital modes typically used for keyboard-to-keyboard communications using a piece of free cross-platform software called Fldigi. On HF we use SSB for digital modes allowing us to hear multiple signals share a small piece of spectrum with as little as tens of hertz of separation. The waterfall below shows three PSK31 signals who only differ in audio frequency.</p>
+<div id="attachment_670" class="wp-caption aligncenter">
+<p><a href="../../../../wp-content/uploads/2018/04/Fldigi-PSK31-TX-31.png"><img decoding="async" class="size-full wp-image-670" src="../../../../wp-content/uploads/2018/04/xFldigi-PSK31-TX-31.png.pagespeed.ic.1R-wEg4xeV.jpg" sizes="(max-width: 937px) 100vw, 937px" srcset="http://34.234.82.232/wp-content/uploads/2018/04/Fldigi-PSK31-TX-31.png 937w,http://34.234.82.232/wp-content/uploads/2018/04/Fldigi-PSK31-TX-31-300x40.png 300w,http://34.234.82.232/wp-content/uploads/2018/04/Fldigi-PSK31-TX-31-768x102.png 768w" alt="" width="937" height="125"></a></p>
+<p class="wp-caption-text">Three PSK31 signals on HF</p>
+</div>
+<p>FM demodulation exhibits a phenomenon known as the <a href="https://en.wikipedia.org/wiki/Capture_effect" target="_blank" rel="noopener noreferrer">capture effect</a> which has us only hear the stronger of two signals within the same frequency. We either live with the capture effect when using FM or develop digital modes that are carrier sensing to avoid collision with other transmissions. Amateur Packet Radio (aka Packet Radio) is a digital mode that addresses the collision problem.</p>
+<h2>Packet Radio</h2>
+<p><a href="https://www.tapr.org">Packet Radio</a>, is a digital mode native to VHF/UHF that uses the <a href="https://en.wikipedia.org/wiki/AX.25">AX.25 protocol</a>.The AX.25 protocol addresses transmission collision through a media access control approach called <a class="mw-redirect" title="Carrier sense multiple access" href="https://en.wikipedia.org/wiki/Carrier_sense_multiple_access">Carrier sense multiple access</a> with collision recovery (CSMA/CR.) AX.25 supports connected and connection-less modes of operation akin to the use of TCP and UDP respectively in TCP/IP.</p>
+<p>Packet Radio was historically implemented using dedicated hardware called <a href="https://en.wikipedia.org/wiki/Terminal_node_controller" target="_blank" rel="noopener noreferrer">Terminal Node Controllers (TNC)</a>. A typical station would be a dumb terminal or computer running terminal software serial connected to the TNC and in turn connected to a radio via the microphone and speaker ports.</p>
+<p>Because the data rates used are 1200, 2400, and 9600 baud the services running on AX.25 are limited in providing in any media rich experience one is accustomed to in surfing the Internet. Still it is popular for emergency communications as well as popular service called Automatic Packet Reporting System (<a href="https://en.wikipedia.org/wiki/Automatic_Packet_Reporting_System" target="_blank" rel="noopener noreferrer">APRS</a>) which we will cover here.</p>
+<h2>APRS</h2>
+<p>APRS is a digital communications service that provides a geospatial view of activities (Bulletins, Messages, Alerts, Weather), other stations (mobile or fixed), and points of interest for a given area. APRS operates in connection-less mode.</p>
+<div id="attachment_701" style="width: 868px" class="wp-caption aligncenter"><a href="../../../../wp-content/uploads/2018/04/APRS-example.png"><img decoding="async" aria-describedby="caption-attachment-701" class="wp-image-701 size-full" src="../../../../wp-content/uploads/2018/04/xAPRS-example.png.pagespeed.ic.J9MoQYwq2K.jpg" alt="APRS Example" width="858" height="758" srcset="../../../../wp-content/uploads/2018/04/APRS-example.png 858w,../../../../wp-content/uploads/2018/04/APRS-example-300x265.png 300w,../../../../wp-content/uploads/2018/04/APRS-example-768x678.png 768w" sizes="(max-width: 858px) 100vw, 858px"></a><p id="caption-attachment-701" class="wp-caption-text">APRS Client application showing location of Ham Radio stations using APRS service</p></div>
+<p>APRS packets are transmitted for all stations to hear and use. Digipeaters form the backbone of the APRS system using <a title="Store and forward" href="https://en.wikipedia.org/wiki/Store_and_forward">store and forward</a> technology to retransmit packets. All stations operate on the same frequency with packets moving through the radio network from digipeater to digipeater, Packet movement is similar to <a href="https://en.wikipedia.org/wiki/Distance-vector_routing_protocol" target="_blank" rel="noopener noreferrer">distance-vector routing protocol</a> dropped after so many hops.</p>
+<h2>What we will be doing</h2>
+<p>We will continue to use the VHF/UHF stations we setup in part 1 and in the workshop but add two software packages. The first software package is <a href="https://github.com/wb2osz/direwolf/blob/dev/doc/README.md" target="_blank" rel="noopener noreferrer">Dire Wolf</a> which will serve as our TNC serving up the AX.25 protocol stack. The second software package we will be using is <span style="color: #000000;"><span style="font-family: 'Ubuntu Condensed';"><span style="font-size: medium;"><a href="https://www.ka2ddo.org/ka2ddo/YAAC.html">YAAC</a></span></span></span> <span style="color: #000000;"><span style="font-family: 'Ubuntu Condensed';"><span style="font-size: medium;">(“Yet Another APRS Client”) to </span></span></span>run APRS. Again, all software is cross-platform.</p>
+<h2>Dire Wolf</h2>
+<p><a href="https://github.com/wb2osz/direwolf/blob/dev/doc/README.md" target="_blank" rel="noopener noreferrer">Dire Wolf</a> is cross-platform soundcard <a href="https://en.wikipedia.org/wiki/Terminal_node_controller" target="_blank" rel="noopener noreferrer">Terminal Node Controller (TNC)</a> available for Windows, OSX, and Linux. Dire Wolf replaces an an external TNC device akin to a modem.</p>
+<p>In our simple VHF/UHF station, we use the Baofeng Audio Cable between the USB sound device and the radio. Since there is no separate PTT connection, we continue to use VOX to key the radio.</p>
+<h3>Installing Dire Wolf</h3>
+<p>Windows and OSX users can <a href="https://github.com/wb2osz/direwolf/releases" target="_blank" rel="noopener noreferrer">download the software from the GitHub site</a> and run the executables. Linux users install Dire Wolf by going into your home directory, cloning the GitHub repository and build the executable.</p>
+<pre>cd ~<code>
+git clone http://github.com/wb2osz/direwolf
+cd direwolf
+git checkout 1.4
+make
+sudo make install
+make install-conf </code></pre>
+<p>The last command will put the following sample conf files into your home directory. We will only be working with <strong>direwolf.conf</strong></p>
+<pre>direwolf.conf
+sdr.conf
+telem-m0xer-3.txt
+telem-balloon.conf
+telem-volts.conf</pre>
+<p>No matter which type of installation, make a back up copy of the direwolf.conf file and then make the follow edits with items in <strong>bold</strong> adjusted to your specific situation.</p>
+<pre>ADEVICE <strong>plughw:1,0</strong>
+ACHANNELS 1(
+CHANNEL 0
+MYCALL <strong>YOUR-CALL</strong>
+MODEM 1200
+AGWPORT 8000
+KISSPORT 8001
+DWAIT 50
+PBEACON delay=00:15 every=30 overlay=S symbol="digi" lat=<strong>XX.XXXN</strong> long=<strong>YYY.YYYW</strong> power=<strong>5</strong> height=<strong>200</strong> gain=3 comment="<strong>CITY ST</strong>" via=WIDE1-1,WIDE2-1</pre>
+<p>With <strong>ADEVICE</strong> you are setting Dire Wolf to use the USB sound dongle and not the internal soundcard on your laptop. The ADEVICE name will vary across operating systems. What is displayed above is for a Linux laptop. <strong>MYCALL</strong> is followed by your Amateur Radio callsign. <strong>PBEACON</strong> needs to be updated with your location, power, and height above ground. Dire Wolf provides sound modem capability only (with an exception mentioned later.)</p>
+<p>Packet Radio applications connect to Dire Wolf via two local APIs: AGWPE TCP/IP and KISS API’s via the <strong>AGWPORT</strong> and <strong>KISSPORT</strong>, respectively.</p>
+<h3>Running Dire Wolf</h3>
+<p>Since we are not setting up a dedicated station, we will manually start and run Dire Wolf as a background application. Depending on the OS either double-click on the icon or run from a terminal command line in the same directory the direwolf.conf file is in.</p>
+<h2>Yaac</h2>
+<p>YAAC is a Java application for monitoring and connecting with the <a href="http://www.aprs.org/" target="APRS" rel="noopener noreferrer">Automatic Packet Reporting System (APRS)</a> network. We will be using YAAC as a stand-alone APRS client. While YAAC’s map rendering does not depend on Internet connectivity, it is advisable as part of the initial configuration to be connected to the Internet to use alternate highly detailed maps (ie. topography detail.)</p>
+<h3>Installing YaaC</h3>
+<p>Because YAAC is written in Java, you will need to have the Java Runtime Environment (JRE) version 7 minimum installed on your system. You can test whether you have the minimum version of Java installed by getting a command shell on your system and issuing the command</p>
+<pre>java-version</pre>
+<p>Create a separate folder/directory to run YAAC in. <a href="http://www.ka2ddo.org/ka2ddo/YAAC.zip">Download YAAC</a> into that folder and unzip/uncompress it there. At a command line and within that folder run the following:</p>
+<pre>java -jar YAAC.jar</pre>
+<h3>Configuring and using YaaC</h3>
+<p>YaaC is well documented with the <a href="http://www.ka2ddo.org/ka2ddo/YAAC.html" target="_blank" rel="noopener noreferrer">YaaC website</a> itself providing no better source of getting you up, running and experiencing APRS quickly. It is important to insure during setup that you are connected to the Internet to download maps for areas you will be operating from. APRS itself is just communicating data about the stations/devices themselves and location data.</p>
+<h2>What delayed this post</h2>
+<p>I’ve been experimenting on and off with Packet Radio using various sound card modem software  packages for a few years now. This includes following best practices in providing circuit protection between the sound cards and the radio. For <a href="https://duckduckgo.com/?q=sound+card+interface+digital+radio&ia=web" target="_blank" rel="noopener noreferrer">sound card interfaces</a> I keep a couple of of <a href="https://www.ebay.com/itm/Psk-31-EASY-DIGI-Sound-Card-Interface-PSK-RTTY-SSTV-NBEMS-JT-65-PCB-KIT/323255997507" target="_blank" rel="noopener noreferrer">Easy Digi Kits</a> on hand for experimentation, they cost as little as $8 USD. For more permanent operations I have two <a href="http://www.westmountainradio.com/product_info.php?products_id=nomicu_comp_usb" target="_blank" rel="noopener noreferrer">RigBlaster Nomics</a>. Since pinouts vary among radio I like using the Nomics since wiring can be changed via jumpers rather than rewiring an Easy Digi Kit.</p>
+<p>This series of posts and the workshop were focused on providing new hams a path of least resistance providing a “quick win” to experiencing and enjoying Amateur Radio at the lowest price point possible. Besides cheap hardware and using sound modem software, to make the outcome possible I would need to use VOX as the universal method to key transmit instead of PTT.  Packet Radio services that use connection-less modes like APRS are tolerant in the use of VOX but traditional Packet Radio services that use connected mode like BBS and direct chat are not.</p>
+<p>The <a href="https://github.com/wb2osz/direwolf/blob/dev/doc/User-Guide.pdf" target="_blank" rel="noopener noreferrer">Dire Wolf User guide</a> provides a rich amount of content on the issues of using VOX in Packet Radio. After a few years of trying to get make reliable connected mode connections using VOX I can say <em>DON’T WASTE YOUR TIME</em>.  This is the reason not only in the delay of Part 2 but why I did not include Packet Radio in the workshop at HOPE XII.</p>
+<p>I’ve been asked by those who attended to present the workshop again should there be a HOPE XIII in 2020 and include Packet Radio. I plan to do that and include connected modes by coming up with an easy to build sound card interface for under $20 USD that supports PTT use with Boafeng hand-held radios and their equivalents. I look to complete the interface in the coming months and post the results and further experimentation here results here.</p>
+<p>For what it’s worth,</p>
+<p>– Joe, NE2Z</p>
+<p> </p>
+<p> </p>
+<p> </p>
+<p> </p>
+<p> </p>
+<p> </p>
+											</div>
+
+		
+						<div class="entry-utility">
+							This entry was posted in <a href="../../../../category/amateur-radio/index.html" rel="category tag">Amateur Radio</a>. Bookmark the <a href="../../../../2018/11/09/demonstrating-amateur-radio-digital-modes-with-simple-vhf-uhf-digital-stations-part-2/index.html" title="Permalink to Demonstrating Amateur Radio Digital Modes with simple VHF/UHF Digital Stations (Part 2)" rel="bookmark">permalink</a>.													</div>
+					</div>
+
+					<div id="nav-below" class="navigation">
+						<div class="nav-previous"><a href="../../../../2018/07/30/amateur-radio-hope-xii-epilogue/index.html" rel="prev"><span class="meta-nav">←</span> Amateur Radio @ HOPE XII – Epilogue</a></div>
+						<div class="nav-next"><a href="../../../../2018/12/27/packet-radio-connected-modes-with-the-baofeng-uv-5r/index.html" rel="next">Packet Radio connected-modes with the Baofeng UV-5R (Updated February 7, 2020) <span class="meta-nav">→</span></a></div>
+					</div>
+
+					
+			<div id="comments">
+
+
+
+
+</div>
+
+	
+			</div>
+		</div>
+
+
+		<div id="primary" class="widget-area" role="complementary">
+			<ul class="xoxo"><li id="recent-posts-3" class="widget-container widget_recent_entries">
+		<h3 class="widget-title">Recent Posts</h3>
+		<ul><li>
+					<a href="../../../../2021/10/18/from-swl-to-sigint/index.html">From SWL to SIGINT</a>
+									</li>
+											<li>
+					<a href="../../../../2021/10/13/the-future-of-amateur-radio-is-with-our-youth-not/index.html">The Future of Amateur Radio is with our youth  . . . not!</a>
+									</li>
+											<li>
+					<a href="../../../../2021/04/11/heart-still-beating/index.html">The Heart of Amateur Radio is still beating</a>
+									</li>
+											<li>
+					<a href="../../../../2020/01/20/ham-radio-is-dead/index.html">Ham Radio is Dead, Long Live Amateur Radio!</a>
+									</li>
+											<li>
+					<a href="../../../../2018/12/27/packet-radio-connected-modes-with-the-baofeng-uv-5r/index.html">Packet Radio connected-modes with the Baofeng UV-5R (Updated February 7, 2020)</a>
+									</li>
+											<li>
+					<a href="../../../../2018/11/09/demonstrating-amateur-radio-digital-modes-with-simple-vhf-uhf-digital-stations-part-2/index.html" aria-current="page">Demonstrating Amateur Radio Digital Modes with simple VHF/UHF Digital Stations (Part 2)</a>
+									</li>
+											<li>
+					<a href="../../../../2018/07/30/amateur-radio-hope-xii-epilogue/index.html">Amateur Radio @ HOPE XII – Epilogue</a>
+									</li>
+											<li>
+					<a href="../../../../2018/07/19/amateur-radio-hope-xii/index.html">Amateur Radio @ HOPE XII</a>
+									</li>
+											<li>
+					<a href="../../../../2018/04/23/digital-modes-with-vhfuhf_1/index.html">Demonstrating Amateur Radio Digital Modes with simple VHF/UHF Digital Stations (Part 1)</a>
+									</li>
+											<li>
+					<a href="../../../../2018/04/17/decoding-digital-modes-with-software-defined-radio/index.html">Decoding Digital Modes with Software Defined Radio</a>
+									</li>
+											<li>
+					<a href="../../../../2018/04/06/cross-platform-experiments-with-software-defined-radio/index.html">Cross-platform experiments with Software Defined Radio</a>
+									</li>
+					</ul></li><li id="categories-3" class="widget-container widget_categories"><h3 class="widget-title">Categories</h3>
+			<ul><li class="cat-item cat-item-2"><a href="../../../../category/amateur-radio/index.html">Amateur Radio</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="../../../../category/cloud/index.html">Cloud</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="../../../../category/ramblings/index.html">Ramblings</a>
+</li>
+			</ul></li><li id="archives-3" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>
+			<ul><li><a href="../../../../2021/10/index.html">October 2021</a></li>
+	<li><a href="../../../../2021/04/index.html">April 2021</a></li>
+	<li><a href="../../../../2020/01/index.html">January 2020</a></li>
+	<li><a href="../../../../2018/12/index.html">December 2018</a></li>
+	<li><a href="../../../../2018/11/index.html">November 2018</a></li>
+	<li><a href="../../../../2018/07/index.html">July 2018</a></li>
+	<li><a href="../../../../2018/04/index.html">April 2018</a></li>
+	<li><a href="../../../../2018/03/index.html">March 2018</a></li>
+	<li><a href="../../../../2017/09/index.html">September 2017</a></li>
+	<li><a href="../../../../2016/11/index.html">November 2016</a></li>
+	<li><a href="../../../../2016/08/index.html">August 2016</a></li>
+	<li><a href="../../../../2014/09/index.html">September 2014</a></li>
+	<li><a href="../../../../2014/08/index.html">August 2014</a></li>
+			</ul></li><li id="calendar-2" class="widget-container widget_calendar"><div id="calendar_wrap" class="calendar_wrap"><table id="wp-calendar" class="wp-calendar-table"><caption>November 2018</caption>
+	<thead><tr><th scope="col" title="Monday">M</th>
+		<th scope="col" title="Tuesday">T</th>
+		<th scope="col" title="Wednesday">W</th>
+		<th scope="col" title="Thursday">T</th>
+		<th scope="col" title="Friday">F</th>
+		<th scope="col" title="Saturday">S</th>
+		<th scope="col" title="Sunday">S</th>
+	</tr></thead><tbody><tr><td colspan="3" class="pad"> </td><td>1</td><td>2</td><td>3</td><td>4</td>
+	</tr><tr><td>5</td><td>6</td><td>7</td><td>8</td><td><a href="../../../../2018/11/09/index.html" aria-label="Posts published on November 9, 2018">9</a></td><td>10</td><td>11</td>
+	</tr><tr><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td>
+	</tr><tr><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td>
+	</tr><tr><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td>
+		<td class="pad" colspan="2"> </td>
+	</tr></tbody></table><nav aria-label="Previous and next months" class="wp-calendar-nav"><span class="wp-calendar-nav-prev"><a href="../../../../2018/07/index.html">« Jul</a></span>
+		<span class="pad"> </span>
+		<span class="wp-calendar-nav-next"><a href="../../../../2018/12/index.html">Dec »</a></span>
+	</nav></div></li>			</ul></div>
+
+	</div>
+
+	<div id="footer" role="contentinfo">
+		<div id="colophon">
+
+
+
+			<div id="site-info">
+				<a href="../../../../index.html" rel="home">
+					Joe Cupano				</a>
+							</div>
+
+			<div id="site-generator">
+								<a href="https://wordpress.org/" class="imprint" title="Semantic Personal Publishing Platform">
+					Proudly powered by WordPress.				</a>
+			</div>
+
+		</div>
+	</div>
+
+</div>
+
+</body></html>

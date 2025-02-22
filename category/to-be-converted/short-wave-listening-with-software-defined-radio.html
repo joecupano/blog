@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en-US"><head><meta charset="UTF-8"><title>
+Short Wave Listening with Software Defined Radio | Joe Cupano	</title><link rel="stylesheet" type="text/css" media="all" href="../../../../wp-content/themes/twentyten/style.css"><meta name="robots" content="max-image-preview:large"><style>img:is([sizes="auto" i], [sizes^="auto," i]) {contain-intrinsic-size:3000px 1500px}</style><link rel="stylesheet" id="wp-block-library-css" href="../../../../wp-includes/css/dist/block-library/style.min.css" type="text/css" media="all"><style id="wp-block-library-theme-inline-css" type="text/css">.wp-block-audio :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-audio :where(figcaption){color:#ffffffa6}.wp-block-audio{margin:0 0 1em}.wp-block-code{border:1px solid #ccc;border-radius:4px;font-family:Menlo,Consolas,monaco,monospace;padding:.8em 1em}.wp-block-embed :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-embed :where(figcaption){color:#ffffffa6}.wp-block-embed{margin:0 0 1em}.blocks-gallery-caption{color:#555;font-size:13px;text-align:center}.is-dark-theme .blocks-gallery-caption{color:#ffffffa6}:root :where(.wp-block-image figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme :root :where(.wp-block-image figcaption){color:#ffffffa6}.wp-block-image{margin:0 0 1em}.wp-block-pullquote{border-bottom:4px solid;border-top:4px solid;color:currentColor;margin-bottom:1.75em}.wp-block-pullquote cite,.wp-block-pullquote footer,.wp-block-pullquote__citation{color:currentColor;font-size:.8125em;font-style:normal;text-transform:uppercase}.wp-block-quote{border-left:.25em solid;margin:0 0 1.75em;padding-left:1em}.wp-block-quote cite,.wp-block-quote footer{color:currentColor;font-size:.8125em;font-style:normal;position:relative}.wp-block-quote:where(.has-text-align-right){border-left:none;border-right:.25em solid;padding-left:0;padding-right:1em}.wp-block-quote:where(.has-text-align-center){border:none;padding-left:0}.wp-block-quote.is-large,.wp-block-quote.is-style-large,.wp-block-quote:where(.is-style-plain){border:none}.wp-block-search .wp-block-search__label{font-weight:700}.wp-block-search__button{border:1px solid #ccc;padding:.375em .625em}:where(.wp-block-group.has-background){padding:1.25em 2.375em}.wp-block-separator.has-css-opacity{opacity:.4}.wp-block-separator{border:none;border-bottom:2px solid;margin-left:auto;margin-right:auto}.wp-block-separator.has-alpha-channel-opacity{opacity:1}.wp-block-separator:not(.is-style-wide):not(.is-style-dots){width:100px}.wp-block-separator.has-background:not(.is-style-dots){border-bottom:none;height:1px}.wp-block-separator.has-background:not(.is-style-wide):not(.is-style-dots){height:2px}.wp-block-table{margin:0 0 1em}.wp-block-table td,.wp-block-table th{word-break:normal}.wp-block-table :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-table :where(figcaption){color:#ffffffa6}.wp-block-video :where(figcaption){color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-video :where(figcaption){color:#ffffffa6}.wp-block-video{margin:0 0 1em}:root :where(.wp-block-template-part.has-background){margin-bottom:0;margin-top:0;padding:1.25em 2.375em}</style><style id="pdfemb-pdf-embedder-viewer-style-inline-css" type="text/css">.wp-block-pdfemb-pdf-embedder-viewer{max-width:none}</style><style id="classic-theme-styles-inline-css" type="text/css">.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}</style><style id="global-styles-inline-css" type="text/css">:root{--wp--preset--aspect-ratio--square:1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black:#000;--wp--preset--color--cyan-bluish-gray:#abb8c3;--wp--preset--color--white:#fff;--wp--preset--color--pale-pink:#f78da7;--wp--preset--color--vivid-red:#cf2e2e;--wp--preset--color--luminous-vivid-orange:#ff6900;--wp--preset--color--luminous-vivid-amber:#fcb900;--wp--preset--color--light-green-cyan:#7bdcb5;--wp--preset--color--vivid-green-cyan:#00d084;--wp--preset--color--pale-cyan-blue:#8ed1fc;--wp--preset--color--vivid-cyan-blue:#0693e3;--wp--preset--color--vivid-purple:#9b51e0;--wp--preset--color--blue:#06c;--wp--preset--color--medium-gray:#666;--wp--preset--color--light-gray:#f1f1f1;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple:linear-gradient(135deg,rgba(6,147,227,1) 0%,#9b51e0 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan:linear-gradient(135deg,#7adcb4 0%,#00d082 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange:linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red:linear-gradient(135deg,rgba(255,105,0,1) 0%,#cf2e2e 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray:linear-gradient(135deg,#eee 0%,#a9b8c3 100%);--wp--preset--gradient--cool-to-warm-spectrum:linear-gradient(135deg,#4aeadc 0%,#9778d1 20%,#cf2aba 40%,#ee2c82 60%,#fb6962 80%,#fef84c 100%);--wp--preset--gradient--blush-light-purple:linear-gradient(135deg,#ffceec 0%,#9896f0 100%);--wp--preset--gradient--blush-bordeaux:linear-gradient(135deg,#fecda5 0%,#fe2d2d 50%,#6b003e 100%);--wp--preset--gradient--luminous-dusk:linear-gradient(135deg,#ffcb70 0%,#c751c0 50%,#4158d0 100%);--wp--preset--gradient--pale-ocean:linear-gradient(135deg,#fff5cb 0%,#b6e3d4 50%,#33a7b5 100%);--wp--preset--gradient--electric-grass:linear-gradient(135deg,#caf880 0%,#71ce7e 100%);--wp--preset--gradient--midnight:linear-gradient(135deg,#020381 0%,#2874fc 100%);--wp--preset--font-size--small:13px;--wp--preset--font-size--medium:20px;--wp--preset--font-size--large:36px;--wp--preset--font-size--x-large:42px;--wp--preset--spacing--20:.44rem;--wp--preset--spacing--30:.67rem;--wp--preset--spacing--40:1rem;--wp--preset--spacing--50:1.5rem;--wp--preset--spacing--60:2.25rem;--wp--preset--spacing--70:3.38rem;--wp--preset--spacing--80:5.06rem;--wp--preset--shadow--natural:6px 6px 9px rgba(0,0,0,.2);--wp--preset--shadow--deep:12px 12px 50px rgba(0,0,0,.4);--wp--preset--shadow--sharp:6px 6px 0 rgba(0,0,0,.2);--wp--preset--shadow--outlined:6px 6px 0 -3px rgba(255,255,255,1) , 6px 6px rgba(0,0,0,1);--wp--preset--shadow--crisp:6px 6px 0 rgba(0,0,0,1)}:where(.is-layout-flex){gap:.5em}:where(.is-layout-grid){gap:.5em}body .is-layout-flex{display:flex}.is-layout-flex{flex-wrap:wrap;align-items:center}.is-layout-flex > :is(*, div){margin:0}body .is-layout-grid{display:grid}.is-layout-grid > :is(*, div){margin:0}:where(.wp-block-columns.is-layout-flex){gap:2em}:where(.wp-block-columns.is-layout-grid){gap:2em}:where(.wp-block-post-template.is-layout-flex){gap:1.25em}:where(.wp-block-post-template.is-layout-grid){gap:1.25em}.has-black-color{color:var(--wp--preset--color--black)!important}.has-cyan-bluish-gray-color{color:var(--wp--preset--color--cyan-bluish-gray)!important}.has-white-color{color:var(--wp--preset--color--white)!important}.has-pale-pink-color{color:var(--wp--preset--color--pale-pink)!important}.has-vivid-red-color{color:var(--wp--preset--color--vivid-red)!important}.has-luminous-vivid-orange-color{color:var(--wp--preset--color--luminous-vivid-orange)!important}.has-luminous-vivid-amber-color{color:var(--wp--preset--color--luminous-vivid-amber)!important}.has-light-green-cyan-color{color:var(--wp--preset--color--light-green-cyan)!important}.has-vivid-green-cyan-color{color:var(--wp--preset--color--vivid-green-cyan)!important}.has-pale-cyan-blue-color{color:var(--wp--preset--color--pale-cyan-blue)!important}.has-vivid-cyan-blue-color{color:var(--wp--preset--color--vivid-cyan-blue)!important}.has-vivid-purple-color{color:var(--wp--preset--color--vivid-purple)!important}.has-black-background-color{background-color:var(--wp--preset--color--black)!important}.has-cyan-bluish-gray-background-color{background-color:var(--wp--preset--color--cyan-bluish-gray)!important}.has-white-background-color{background-color:var(--wp--preset--color--white)!important}.has-pale-pink-background-color{background-color:var(--wp--preset--color--pale-pink)!important}.has-vivid-red-background-color{background-color:var(--wp--preset--color--vivid-red)!important}.has-luminous-vivid-orange-background-color{background-color:var(--wp--preset--color--luminous-vivid-orange)!important}.has-luminous-vivid-amber-background-color{background-color:var(--wp--preset--color--luminous-vivid-amber)!important}.has-light-green-cyan-background-color{background-color:var(--wp--preset--color--light-green-cyan)!important}.has-vivid-green-cyan-background-color{background-color:var(--wp--preset--color--vivid-green-cyan)!important}.has-pale-cyan-blue-background-color{background-color:var(--wp--preset--color--pale-cyan-blue)!important}.has-vivid-cyan-blue-background-color{background-color:var(--wp--preset--color--vivid-cyan-blue)!important}.has-vivid-purple-background-color{background-color:var(--wp--preset--color--vivid-purple)!important}.has-black-border-color{border-color:var(--wp--preset--color--black)!important}.has-cyan-bluish-gray-border-color{border-color:var(--wp--preset--color--cyan-bluish-gray)!important}.has-white-border-color{border-color:var(--wp--preset--color--white)!important}.has-pale-pink-border-color{border-color:var(--wp--preset--color--pale-pink)!important}.has-vivid-red-border-color{border-color:var(--wp--preset--color--vivid-red)!important}.has-luminous-vivid-orange-border-color{border-color:var(--wp--preset--color--luminous-vivid-orange)!important}.has-luminous-vivid-amber-border-color{border-color:var(--wp--preset--color--luminous-vivid-amber)!important}.has-light-green-cyan-border-color{border-color:var(--wp--preset--color--light-green-cyan)!important}.has-vivid-green-cyan-border-color{border-color:var(--wp--preset--color--vivid-green-cyan)!important}.has-pale-cyan-blue-border-color{border-color:var(--wp--preset--color--pale-cyan-blue)!important}.has-vivid-cyan-blue-border-color{border-color:var(--wp--preset--color--vivid-cyan-blue)!important}.has-vivid-purple-border-color{border-color:var(--wp--preset--color--vivid-purple)!important}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background:var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple)!important}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background:var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan)!important}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background:var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange)!important}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background:var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red)!important}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background:var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray)!important}.has-cool-to-warm-spectrum-gradient-background{background:var(--wp--preset--gradient--cool-to-warm-spectrum)!important}.has-blush-light-purple-gradient-background{background:var(--wp--preset--gradient--blush-light-purple)!important}.has-blush-bordeaux-gradient-background{background:var(--wp--preset--gradient--blush-bordeaux)!important}.has-luminous-dusk-gradient-background{background:var(--wp--preset--gradient--luminous-dusk)!important}.has-pale-ocean-gradient-background{background:var(--wp--preset--gradient--pale-ocean)!important}.has-electric-grass-gradient-background{background:var(--wp--preset--gradient--electric-grass)!important}.has-midnight-gradient-background{background:var(--wp--preset--gradient--midnight)!important}.has-small-font-size{font-size:var(--wp--preset--font-size--small)!important}.has-medium-font-size{font-size:var(--wp--preset--font-size--medium)!important}.has-large-font-size{font-size:var(--wp--preset--font-size--large)!important}.has-x-large-font-size{font-size:var(--wp--preset--font-size--x-large)!important}:where(.wp-block-post-template.is-layout-flex){gap:1.25em}:where(.wp-block-post-template.is-layout-grid){gap:1.25em}:where(.wp-block-columns.is-layout-flex){gap:2em}:where(.wp-block-columns.is-layout-grid){gap:2em}:root :where(.wp-block-pullquote){font-size:1.5em;line-height:1.6}</style><link rel="stylesheet" id="twentyten-block-style-css" href="../../../../wp-content/themes/twentyten/blocks.css" type="text/css" media="all"><style type="text/css">.broken_link,a.broken_link{text-decoration:line-through}</style></head><body class="post-template-default single single-post postid-424 single-format-standard">
+<div id="wrapper" class="hfeed">
+	<div id="header">
+		<div id="masthead">
+			<div id="branding" role="banner">
+								<div id="site-title">
+					<span>
+						<a href="../../../../index.html" rel="home">Joe Cupano</a>
+					</span>
+				</div>
+				<div id="site-description">Just another opinion on tech, infosec, and ham radio</div>
+
+				<img src="../../../../wp-content/uploads/2016/08/cropped-cropped-cropped-cropped-cropped-wordpress-banner-cupano1-1.jpg" width="940" height="197" alt="Joe Cupano" srcset="../../../../wp-content/uploads/2016/08/cropped-cropped-cropped-cropped-cropped-wordpress-banner-cupano1-1.jpg 940w,../../../../wp-content/uploads/2016/08/cropped-cropped-cropped-cropped-cropped-wordpress-banner-cupano1-1-300x63.jpg 300w,../../../../wp-content/uploads/2016/08/cropped-cropped-cropped-cropped-cropped-wordpress-banner-cupano1-1-768x161.jpg 768w" sizes="(max-width: 940px) 100vw, 940px" decoding="async" fetchpriority="high"></div>
+
+			<div id="access" role="navigation">
+								<div class="skip-link screen-reader-text"><a href="#content">Skip to content</a></div>
+				<div class="menu-header"><ul id="menu-home-menu" class="menu"><li id="menu-item-135" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-135"><a href="../../../../index.html">Home</a></li>
+<li id="menu-item-123" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-123"><a href="../../../../about/index.html">About</a></li>
+<li id="menu-item-137" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-137"><a href="../../../../disclaimer/index.html">Disclaimer</a></li>
+<li id="menu-item-857" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-857"><a href="../../../../category/projects/index.html">Projects</a>
+<ul class="sub-menu"><li id="menu-item-860" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-860"><a href="../../../../hopexv-workshop/index.html">Amateur Radio Using Digital Modes (HOPE XV Workshop)</a></li>
+	<li id="menu-item-861" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-861"><a href="../../../../wp-content/uploads/2019/11/OCARC_KitBuilding_3-0_ext.pdf">Kit Building Presentation</a></li>
+	<li id="menu-item-864" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-864"><a href="../../../../wp-content/uploads/2019/03/S-Pixie-QRP-Kit-Student-Manual-v1-0.pdf">S Pixie QRP Student Manual</a></li>
+	<li id="menu-item-866" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-866"><a href="../../../../wp-content/uploads/2019/03/Field-Day-Logging-Network-Setup-2018.pdf">Field Day Network Logging</a></li>
+</ul></li>
+<li id="menu-item-849" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-849"><a href="../../../../archive/index.html">Archived Posts</a>
+<ul class="sub-menu"><li id="menu-item-855" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-855"><a href="../../../../archive/how-not-to-fear-cw-and-possibly-enjoy-it/index.html">How not to fear CW and possibly enjoy it</a></li>
+	<li id="menu-item-850" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-850"><a href="../../../../archive/infosec-as-a-career/index.html">How do I pursue Infosec as a career ?</a></li>
+	<li id="menu-item-851" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-851"><a href="../../../../archive/worst-denial-of-service-attack/index.html">One of the worst Denial of Service attacks never reported</a></li>
+	<li id="menu-item-852" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-852"><a href="../../../../archive/if-there-is-no-business-there-is-nothing-to-secure/index.html">If there is no business, there is nothing to secure</a></li>
+	<li id="menu-item-853" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-853"><a href="../../../../archive/seven-words-you-can-never-say-to-content-filters/index.html">Seven Words You Can Never Say to Content Filters</a></li>
+	<li id="menu-item-854" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-854"><a href="../../../../archive/my-qrp-project-complete/index.html">My QRP Project Complete</a></li>
+</ul></li>
+</ul></div>			</div>
+		</div>
+	</div>
+
+	<div id="main">
+
+		<div id="container">
+			<div id="content" role="main">
+
+			
+
+				<div id="nav-above" class="navigation">
+					<div class="nav-previous"><a href="../../../../2017/09/09/experiments-in-repeater-controller-design-part-2/index.html" rel="prev"><span class="meta-nav">←</span> Experiments in Repeater Controller Design (Part 2)</a></div>
+					<div class="nav-next"><a href="../../../../2018/04/06/cross-platform-experiments-with-software-defined-radio/index.html" rel="next">Cross-platform experiments with Software Defined Radio <span class="meta-nav">→</span></a></div>
+				</div>
+
+				<div id="post-424" class="post-424 post type-post status-publish format-standard hentry category-amateur-radio category-ramblings">
+					<h1 class="entry-title">Short Wave Listening with Software Defined Radio</h1>
+
+					<div class="entry-meta">
+						<span class="meta-prep meta-prep-author">Posted on</span> <a href="../../../../2018/03/31/short-wave-listening-with-software-defined-radio/index.html" title="3:59 am" rel="bookmark"><span class="entry-date">March 31, 2018</span></a> <span class="meta-sep">by</span> <span class="author vcard"><a class="url fn n" href="../../../../author/joe/index.html" title="View all posts by joe">joe</a></span>					</div>
+
+					<div class="entry-content">
+						<h2>Background</h2>
+<p>My interest and career in technology originated with a gift from an adult cousin when I was a child. That gift was a Hallicrafters S-120A Shortwave Radio Receiver. My cousin setup a 50 feet long end fed wire antenna down the length of my backyard tacked against a couple of trees about 12 feet up in the air. The wire fed straight into my bedroom snaked through the window jam. My cousin then showed me how to use the radio, tuned in a few stations, and before I knew I had the <a href="https://en.wikipedia.org/wiki/Shortwave_listening" target="_blank" rel="noopener"> Short Wave Listening (SWL)</a> bug. It was the early 1970’s and there were plenty of stations to tune into – broadcast, utility, amateur radio, aviation, etc.</p>
+<div id="attachment_464" style="width: 310px" class="wp-caption aligncenter"><a href="../../../../wp-content/uploads/2018/03/hallicrafters-s120a.png"><img decoding="async" aria-describedby="caption-attachment-464" class="wp-image-464 size-medium" src="../../../../wp-content/uploads/2018/03/hallicrafters-s120a-300x144.png" alt="Hallicrafters S-120A" width="300" height="144" srcset="../../../../wp-content/uploads/2018/03/hallicrafters-s120a-300x144.png 300w,../../../../wp-content/uploads/2018/03/hallicrafters-s120a-768x369.png 768w,../../../../wp-content/uploads/2018/03/hallicrafters-s120a.png 1023w" sizes="(max-width: 300px) 100vw, 300px"></a><p id="caption-attachment-464" class="wp-caption-text">Hallicrafters S-120A</p></div>
+<p>I had a couple of years of fun with that radio until one night I was woken up by the flash of an early summer lightening storm and then the sight and smell of smoke coming out of the back of my beloved Hallicrafters radio. Fortunately my uncle who was an avid collector of all things gave me a <a href="https://www.radiomuseum.org/r/philco_t_9_code_12_126.html" target="_blank" rel="noopener">circa 1958  Philco Trans-World Portable T-9</a> which kept me going with my SWL activities – as long as I had enough batteries. Then I found a<b> </b><a href="http://www.tuberadioland.com/philco-37-610-big_bullet_mainl.html" target="_blank" rel="noopener">1937 Philco model 37-610 Table radio</a> from a local antique store which served me well. All the time I still missed my S-120A which I kept for a longtime hoping I could get it fixed.</p>
+<div id="attachment_467" style="width: 310px" class="wp-caption aligncenter"><a href="../../../../wp-content/uploads/2018/03/philco_t-9.jpeg"><img decoding="async" aria-describedby="caption-attachment-467" class="wp-image-467 size-medium" src="../../../../wp-content/uploads/2018/03/philco_t-9-300x213.jpeg" alt="Philco Trans-World Portable T-9" width="300" height="213"></a><p id="caption-attachment-467" class="wp-caption-text">Philco Trans-World Portable T-9</p></div>
+<div id="attachment_466" style="width: 310px" class="wp-caption aligncenter"><a href="../../../../wp-content/uploads/2018/03/philco-37-610-big_bullet.gif"><img loading="lazy" decoding="async" aria-describedby="caption-attachment-466" class="wp-image-466 size-medium" src="../../../../wp-content/uploads/2018/03/philco-37-610-big_bullet-300x190.gif" alt="Philco 37-610 Table Radio" width="300" height="190" srcset="../../../../wp-content/uploads/2018/03/philco-37-610-big_bullet-300x190.gif 300w,../../../../wp-content/uploads/2018/03/philco-37-610-big_bullet-768x486.gif 768w,../../../../wp-content/uploads/2018/03/philco-37-610-big_bullet-1024x648.gif 1024w" sizes="auto, (max-width: 300px) 100vw, 300px"></a><p id="caption-attachment-466" class="wp-caption-text">Philco 37-610 “Big Bullet” Table Radio</p></div>
+<p>But when the 80’s arrived I got into computers, got my Amateur Radio license, went to college, built a career in technology, and live life. My SWL activities faded into memories and my Amateur Radio activity was largely in hiatus into the early ’00s. Then about five years ago I began playing with early software defined radios (SDR) available as kits and projects that re-purposed DVB TV Tuners into VHF/UHF receivers. But it was too bleeding edge for me and I was losing patience with all the tweaking required and lack of information available. Plus VHF/UHF listening didn’t hold much interest for me.</p>
+<p>It wasn’t until I attended an annual <a href="http://www.swlfest.com/forums-events/" target="_blank" rel="noopener">SWL festival</a> in nearby Pennsylvania this year (recommended by a friend) that my interest in SWL was rekindled and inspired me to revisit SWL using SDR options available today.</p>
+<h2>RTL-SDR Dongle</h2>
+<p>When I returned home from the SWL festival, I decided to do research on the current state of SDR focusing on solutions that use <a href="https://www.rtl-sdr.com/an-intro-to-rtl-sdr-technical-dsp-concepts-explained/" target="_blank" rel="noopener">RTL-SDR</a> dongles. What immediately caught my attention was people were using RTL-SDR dongles to listen to HF without the need of an upconverter. An upconverter is a device that converts HF radio reception into VHF/UHF frequencies the RTL-SDR dongle can hear. One example of a upconverter is the Noelec “<a href="https://www.nooelec.com/store/ham-it-up.html" target="_blank" rel="noopener">Ham it Up</a>“which you insert in-line to the antenna and the dongle.</p>
+<div id="attachment_479" style="width: 650px" class="wp-caption aligncenter"><img loading="lazy" decoding="async" aria-describedby="caption-attachment-479" class="wp-image-479 size-large" src="../../../../wp-content/uploads/2018/03/RTL-SDR-Blog_R820T2-1024x399.png" alt="RTL-SDR Blog R820T2" width="640" height="249" srcset="../../../../wp-content/uploads/2018/03/RTL-SDR-Blog_R820T2-1024x399.png 1024w,../../../../wp-content/uploads/2018/03/RTL-SDR-Blog_R820T2-300x117.png 300w,../../../../wp-content/uploads/2018/03/RTL-SDR-Blog_R820T2-768x299.png 768w,../../../../wp-content/uploads/2018/03/RTL-SDR-Blog_R820T2.png 1096w" sizes="auto, (max-width: 640px) 100vw, 640px"><p id="caption-attachment-479" class="wp-caption-text">RTL-SDR Blog R820T2</p></div>
+<p>The RTL-SDR dongle I went with was the <a href="https://www.rtl-sdr.com/wp-content/uploads/2018/02/RTL-SDR-Blog-V3-Datasheet.pdf" target="_blank" rel="noopener">RTL-SDR Blog V3 Dongle</a>. I ordered it from <a href="http://amzn.to/2ibPlRT" target="_blank" rel="noopener">Amazon order</a>. which included some small antennas. Getting this specific version was critical to do HF reception through software configuration only and without hardware additions or changes.</p>
+<div id="attachment_480" style="width: 650px" class="wp-caption aligncenter"><img loading="lazy" decoding="async" aria-describedby="caption-attachment-480" class="wp-image-480 size-large" src="../../../../wp-content/uploads/2018/03/SMA-Male-SO239-Cable-1024x414.png" alt="SMA-Male to SO239 Cable" width="640" height="259" srcset="../../../../wp-content/uploads/2018/03/SMA-Male-SO239-Cable-1024x414.png 1024w,../../../../wp-content/uploads/2018/03/SMA-Male-SO239-Cable-300x121.png 300w,../../../../wp-content/uploads/2018/03/SMA-Male-SO239-Cable-768x311.png 768w,../../../../wp-content/uploads/2018/03/SMA-Male-SO239-Cable.png 1093w" sizes="auto, (max-width: 640px) 100vw, 640px"><p id="caption-attachment-480" class="wp-caption-text">SMA-Male to SO239 Cable</p></div>
+<p>To connect the dongle to my coax that leads to my G5RV HF antenna, I ordered an <a href="https://www.amazon.com/gp/product/B00COW5E3A/" target="_blank" rel="noopener">adapter cable that goes from SMA male to SO-239 connector</a>.</p>
+<h2>Which platform do I use – Linux or Windows?</h2>
+<p>Those re-purposed DVB TV Tuners I mentioned in my early days of SDR were the predecessor to the RTL-SDR dongles of today. Largely the same devices just optimized for SDR use. Anyhow I had great frustration in setting up USB driver persistence on Windows to use the dongles. But since the easiest to use and widely supported SDR application at the time was <a href="https://airspy.com/download/">SDR#</a> (aka SDR Sharp) and only available on Windows one must suffer the pain before pleasure. For Linux the pain was in the lack of stable SDR applications though installing libraries was painless.</p>
+<p>In my research I learned improvements included the ability to have a RTL-SDR dongle installed on one machine and have the raw data streamed via network to another machine for subsequent processing by an SDR application. Since I wanted to try out a range of SDR applications across operating systems and multiple machines, I went with the SDR client/server approach using wired connectivity throughout.</p>
+<h2>Why Wired over Wireless connectivity?</h2>
+<p>Streaming raw data to “view” 8 MHz of spectrum uses about 40 MB/s of network bandwidth. If the SDR server and client are wired to the same physical 100MB or 1GB switch and there are no other streaming media servers or clients (any Netflix users out there?) on that network you should have few issues if any (especially with 1GB switch.)</p>
+<p>For <a href="https://en.wikipedia.org/wiki/IEEE_802.11" target="_blank" rel="noopener">802.11g and 802.11n wireless networks</a> to be viable for SDR clients you you would have to reduce the spect￼rum size under view considerably.This also assumes the wireless network is served by the same physical switch the SDR server is connected to. <a href="https://en.wikipedia.org/wiki/IEEE_802.11b-1999" target="_blank" rel="noopener">802.11b networks</a> simply do not provide enough bandwidth for SDR data streams.</p>
+<p>I use multiple 1GB managed switches on my network that give me the ability to network controls such as <a href="https://en.wikipedia.org/wiki/IEEE_802.1Q" target="_blank" rel="noopener">VLANS</a>, <a href="https://en.wikipedia.org/wiki/Quality_of_service" target="_blank" rel="noopener">QoS</a>, and <a href="https://en.wikipedia.org/wiki/Jumbo_frame" target="_blank" rel="noopener">jumbo frames</a> to manage the streaming services I consume (Netflix) and run (SDR.) A good switch that meets spec at a reasonable price is the <a href="https://www.netgear.com/support/product/GS108Tv2" target="_blank" rel="noopener">NETGEAR GS108TV2</a>.</p>
+<h2>SDR Server</h2>
+<p>The server is a Raspberry Pi 2 with <a href="https://osmocom.org/projects/sdr/wiki/rtl-sdr#rtl_tcp" target="_blank" rel="noopener" class="broken_link">RTL_TCP</a> as the application serving up the raw data stream. To insure I have the latest feature sets available for the RTL-SDR software, I compiled the RTL-SDR drivers from source as <a href="https://github.com/osmocom/rtl-sdr" target="_blank" rel="noopener">pulled from GitHub</a>. rather than use the software package available from the distribution repository.</p>
+<p>I know some of you may be groaning but I found the “direct sample” feature I need for HF reception was not included on the RTL-SDR builds from the distribution repositories at the time of this posting. Have no fear, I’ve documented the steps to retriev and compile RTL-SDR below</p>
+<h3><strong>Compiling RTL-SDR </strong></h3>
+<p>1. Let’s insure your Raspberry Pi install is up to date. Log into your Pi and execute the following:</p>
+<pre>sudo apt-get update
+sudo apt-get upgrade</pre>
+<p>2. Next let’s install the dependencies required in order to build the RTL-SDR software on the Pi:</p>
+<pre>sudo apt-get install git-core git
+sudo apt-get install cmake
+sudo apt-get install libusb-1.0-0-dev
+sudo apt-get install build-essential</pre>
+<p>3. Insuring you are in the Pi home directory, we now download, compile, and install the RTL-SDR drivers with the following:</p>
+<pre>cd /home/pi
+git clone git://git.osmocom.org/rtl-sdr.git
+cd rtl-sdr/
+mkdir build
+cd build
+cmake ../ -DINSTALL_UDEV_RULES=ON
+make
+sudo make install
+sudo ldconfig
+cd ~
+sudo cp ./rtl-sdr/rtl-sdr.rules /etc/udev/rules.d/</pre>
+<p>4. Finally let’s go ahead and reboot:</p>
+<pre>sudo reboot​</pre>
+<p>Note when compiling and installing RTL-SDR from the GitHub repository, RTL-SDR software will installed in the<strong> /usr/local/bin</strong> directory whereas installs from the distribution repository are installed in the <strong>/usr/bin</strong> directory.</p>
+<p>Running RTL_TCP</p>
+<p>With the drivers installed, plug the RTLSDR v3 dongle (with an attached antenna)  into a USB slot on the Pi and test whether it is recognized and working by typing the following:</p>
+<pre>rtl_test</pre>
+<p>You should see output similar to the following:</p>
+<p style="padding-left: 30px;">Found 1 device(s):<br>
+0: Realtek, RTL2838UHIDIR, SN: 00000001</p>
+<p style="padding-left: 30px;">Using device 0: Generic RTL2832U OEM<br>
+Found Rafael Micro R820T tuner<br>
+Supported gain values (29): 0.0 0.9 1.4 2.7 3.7 7.7 8.7 12.5 14.4 15.7 16.6 19.7 20.7 22.9 25.4 28.0 29.7 32.8 33.8 36.4 37.2 38.6 40.2 42.1 43.4 43.9 44.5 48.0 49.6<br>
+[R82XX] PLL not locked!<br>
+Sampling at 2048000 S/s.</p>
+<p style="padding-left: 30px;">Info: This tool will continuously read from the device, and report if<br>
+samples get lost. If you observe no further output, everything is fine.</p>
+<p style="padding-left: 30px;">Reading samples in async mode…</p>
+<p>With the RTL-SDR installed and working, now we can go ahead and start the RTL_TCP server software with the following command (replace the IP address below withthe IP address of your Pi)</p>
+<pre>rtl_tcp -a 192.168.1.73</pre>
+<p>You should see the following output</p>
+<p style="padding-left: 30px;">Found 1 device(s):Why Wired over Wireless connectivity?<br>
+0: Realtek, RTL2838UHIDIR, SN: 00000001</p>
+<p style="padding-left: 30px;">​_Using device 0: Generic RTL2832U OEM<br>
+Found Rafael Micro R820T tuner<br>
+[R82XX] PLL not locked!<br>
+Tuned to 100000000 Hz.<br>
+listening…<br>
+Use the device argument ‘rtl_tcp=192.168.1.73:1234’ in OsmoSDR (gr-osmosdr) source<br>
+to receive samples in GRC and control rtl_tcp parameters (frequency, gain, …).</p>
+<p>At this point you have a running SDR server waiting for a client to connect to it. You can go one step further and configure the Pi to run RTL_TCP on startup or run on demand using systemd service and systemd socket activation respectively. For now I’ve opted just to SSH into the Pi and manually start RTL_TCP when needed.</p>
+<h2>SDR Clients</h2>
+<p>As mentioned, I want to try out a range of SDR applications across operating systems and multiple machines so going with the SDR server and client approach gives me that flexibility. Client configurations I tested include:</p>
+<ul><li><a href="http://gqrx.dk/" target="_blank" rel="noopener">GQRX</a> running on Ubuntu Linux 16.04</li>
+<li><a href="http://www.hdsdr.de/" target="_blank" rel="noopener">HDSDR</a> running on Windows 7</li>
+</ul><p>Always be sure the SDR server and RTL_TCP application are running before starting the SDR clients.</p>
+<h3>GQRX on Ubuntu 16.04</h3>
+<p>Install GQRX from the Ubuntu repository and run it. Once started, click on the <strong>Configure I/O Devices</strong> button in the menu bar.</p>
+<div id="attachment_446" style="width: 310px" class="wp-caption aligncenter"><a href="../../../../wp-content/uploads/2018/03/gqrx-menubar-configio.png"><img loading="lazy" decoding="async" aria-describedby="caption-attachment-446" class="wp-image-446 size-medium" src="../../../../wp-content/uploads/2018/03/gqrx-menubar-configio-300x47.png" alt="GQRX Menu Bar" width="300" height="47" srcset="../../../../wp-content/uploads/2018/03/gqrx-menubar-configio-300x47.png 300w,../../../../wp-content/uploads/2018/03/gqrx-menubar-configio.png 399w" sizes="auto, (max-width: 300px) 100vw, 300px"></a><p id="caption-attachment-446" class="wp-caption-text">GQRX Menu Bar</p></div>
+<p>The I/O input menu will pop-up. Here we tell GQRX to use other device and provide information on where to connect to our SDR server (RTL_TCP with IP address and Port.) We also need to pass the <strong>direct_samp=2</strong> parameter to switch from listening to VHF/UHF and allow us to receive 500 Khz to 28,800 KHz on HF.</p>
+<div id="attachment_448" style="width: 310px" class="wp-caption aligncenter"><a href="../../../../wp-content/uploads/2018/03/gqrx-config-hf-1.png"><img loading="lazy" decoding="async" aria-describedby="caption-attachment-448" class="wp-image-448 size-medium" src="../../../../wp-content/uploads/2018/03/gqrx-config-hf-1-300x249.png" alt="I/O Input Window" width="300" height="249" srcset="../../../../wp-content/uploads/2018/03/gqrx-config-hf-1-300x249.png 300w,../../../../wp-content/uploads/2018/03/gqrx-config-hf-1.png 503w" sizes="auto, (max-width: 300px) 100vw, 300px"></a><p id="caption-attachment-448" class="wp-caption-text">GQRX I/O Input Window</p></div>
+<p>From there you click the <strong>Start DSP</strong> button on the menubar. You are all set to start scanning the HF bands and do some SWL. I typically start with listening to time stations like <a href="https://www.nrc-cnrc.gc.ca/eng/services/time/short_wave.html">CHU</a> on 3330 KHz and <a href="https://www.nist.gov/pml/time-and-frequency-division/radio-stations/wwv">WWV</a> on 5000 KHz to insure all is in order.</p>
+<div id="attachment_498" style="width: 650px" class="wp-caption aligncenter"><a href="../../../../wp-content/uploads/2018/03/40-meter-band_20180331.png"><img loading="lazy" decoding="async" aria-describedby="caption-attachment-498" class="wp-image-498 size-large" src="../../../../wp-content/uploads/2018/03/40-meter-band_20180331-1024x496.png" alt="Entire 40 meter band on GQRX" width="640" height="310" srcset="../../../../wp-content/uploads/2018/03/40-meter-band_20180331-1024x496.png 1024w,../../../../wp-content/uploads/2018/03/40-meter-band_20180331-300x145.png 300w,../../../../wp-content/uploads/2018/03/40-meter-band_20180331-768x372.png 768w,../../../../wp-content/uploads/2018/03/40-meter-band_20180331.png 1747w" sizes="auto, (max-width: 640px) 100vw, 640px"></a><p id="caption-attachment-498" class="wp-caption-text">Entire 40 meter Amateur Band viewed in GQRX</p></div>
+<h3>HDSDR running on Windows 7</h3>
+<p>Since we are not connecting a RTLSDR dongle directly to the machines, we skip the USB configuration hell and download and install <a href="http://www.hdsdr.de/" target="_blank" rel="noopener">HDSDR</a>. After HDSDR is installed, we download and install <a href="https://github.com/roseengineering/ExtIO_RTLTCP" target="_blank" rel="noopener">ExtIO_RTLTCP.DLL</a> into the same directory as HDSDR is installed in. This DLL allows us to connect to RTL_TCP running on the Raspberry Pi serving as a SDR server.Entire 80 Meter Ham Band</p>
+<p>Once that is done, you start HDSDR, selection <strong>Options</strong>, then <strong>Select Inpu</strong>t, and select <strong>ExtIO_RTLTCP</strong>.</p>
+<div id="attachment_455" style="width: 310px" class="wp-caption aligncenter"><a href="../../../../wp-content/uploads/2018/03/HDSDR-Windows_config_RTLTCP.png"><img loading="lazy" decoding="async" aria-describedby="caption-attachment-455" class="wp-image-455 size-medium" src="../../../../wp-content/uploads/2018/03/HDSDR-Windows_config_RTLTCP-300x246.png" alt="HDSR Menu" width="300" height="246" srcset="../../../../wp-content/uploads/2018/03/HDSDR-Windows_config_RTLTCP-300x246.png 300w,../../../../wp-content/uploads/2018/03/HDSDR-Windows_config_RTLTCP.png 555w" sizes="auto, (max-width: 300px) 100vw, 300px"></a><p id="caption-attachment-455" class="wp-caption-text">HDSR Menu</p></div>
+<p>Once that is done, click on the blue <strong>ExtIO button</strong> and enter your SDR server’s IP address for <strong>Hostname</strong>, 1234 for <strong>Port</strong>, and enter 2 for <strong>Direct Sampling</strong> and then click <strong>OK</strong>.  Go ahead and click <strong>Start</strong>.</p>
+<p>You are all set to start scanning the HF bands and do some SWL. As mentioned to insure all is in order I typically start with listening to time stations like <a href="https://www.nrc-cnrc.gc.ca/eng/services/time/short_wave.html" target="_blank" rel="noopener">CHU</a> on 3330 KHz and <a href="https://www.nist.gov/pml/time-and-frequency-division/radio-stations/wwv" target="_blank" rel="noopener">WWV</a> on 5000 KHz to insure all is in order.</p>
+<div id="attachment_493" style="width: 650px" class="wp-caption aligncenter"><a href="../../../../wp-content/uploads/2018/03/80-meter-band_20180326.png"><img loading="lazy" decoding="async" aria-describedby="caption-attachment-493" class="wp-image-493 size-large" src="../../../../wp-content/uploads/2018/03/80-meter-band_20180326-1024x578.png" alt="Entire 80 Meter Ham Band viewed in HDSDR" width="640" height="361" srcset="../../../../wp-content/uploads/2018/03/80-meter-band_20180326-1024x578.png 1024w,../../../../wp-content/uploads/2018/03/80-meter-band_20180326-300x169.png 300w,../../../../wp-content/uploads/2018/03/80-meter-band_20180326-768x434.png 768w,../../../../wp-content/uploads/2018/03/80-meter-band_20180326.png 1280w" sizes="auto, (max-width: 640px) 100vw, 640px"></a><p id="caption-attachment-493" class="wp-caption-text">Entire 80 Meter Ham Band viewed in HDSDR</p></div>
+<h2>Final Notes</h2>
+<p>The state of the art cheap SDR solution has improved much since my early days of experimentation thanks to many persistent pioneers out there. So when playing around with SDR on cheap RTLSDR dongles keep the spirit of experimentation in mind because you will run into idiosyncrasies if not fully documented bugs. To help you keep your sanity here are some notes</p>
+<ul><li>Besides the agility to experiment with a range of SDR applications across operating systems and multiple machines, going the SDR server/client model helps troubleshoot and partition problems between those with the SDR applications themselves (GQRX, HDSDR, etc) on the client and problems with the RTLSDR drivers on the server. Having the network in-between gave me ready visual where to begin troubleshooting.</li>
+<li>While I leave the SDR server running all the time, I do not start the RTL_TCP process until I plan on doing some SWL. I login via SSH, run RTL_TCP -a IP ADDRESS, and leave the terminal window open. The I start my SDR client and connect to the server – in that order. The client may give you an error or not work at all if the server is not running first.</li>
+<li>If you are going to switch to a different client, close the current client, kill the RTL_TCP process on the server and restart RTL_TCP, then fire up the new client. This is especially important if you are going to switch from HF to VHF/UHF listening and vice-versa. For some reason I’ve seen RTL_TCP retain the direct sampling configuration from the last client and not accept from a new client. Advanced topic for next time.</li>
+<li>For HDSDR on Windows client I actually was running it as a virtual machine with 4G RAM on a Ubuntu 16.04 Linux Desktop host with 16GB RAM using <a href="https://www.vmware.com/products/workstation-pro.html" target="_blank" rel="noopener">VMware Workstation 12 Pro</a>. This abstraction has an advantage that on the host operating system I can tap the audio and demod Amateur Radio digital modes such as RTTY, PSK31, etc with <a href="https://en.wikipedia.org/wiki/Fldigi">Fldigi</a>. Another advanced topic.</li>
+<li>I wanted to add Mac OSX to the list of clients to test but native OSX SDR applications are few. I tried <a href="http://fyngyrz.com/?p=915" target="_blank" rel="noopener">SdrDx</a> but it did not support a network setup with RTL_TCP as the server. But I did have success with CubicSDR which runs on OSX and Windows natively. How, using <a href="https://github.com/pothosware/SoapySDR/wiki" target="_blank" rel="noopener">SoapySDR</a> which is the subject of a  follow-up post.</li>
+</ul><p>For what its worth,</p>
+<p>– Joe, NE2Z</p>
+<p> </p>
+											</div>
+
+		
+						<div class="entry-utility">
+							This entry was posted in <a href="../../../../category/amateur-radio/index.html" rel="category tag">Amateur Radio</a>, <a href="../../../../category/ramblings/index.html" rel="category tag">Ramblings</a>. Bookmark the <a href="../../../../2018/03/31/short-wave-listening-with-software-defined-radio/index.html" title="Permalink to Short Wave Listening with Software Defined Radio" rel="bookmark">permalink</a>.													</div>
+					</div>
+
+					<div id="nav-below" class="navigation">
+						<div class="nav-previous"><a href="../../../../2017/09/09/experiments-in-repeater-controller-design-part-2/index.html" rel="prev"><span class="meta-nav">←</span> Experiments in Repeater Controller Design (Part 2)</a></div>
+						<div class="nav-next"><a href="../../../../2018/04/06/cross-platform-experiments-with-software-defined-radio/index.html" rel="next">Cross-platform experiments with Software Defined Radio <span class="meta-nav">→</span></a></div>
+					</div>
+
+					
+			<div id="comments">
+
+
+			<h3 id="comments-title">
+			4 Responses to <em>Short Wave Listening with Software Defined Radio</em>			</h3>
+
+	
+			<ol class="commentlist"><li class="comment even thread-even depth-1" id="li-comment-18">
+		<div id="comment-18">
+			<div class="comment-author vcard">
+				<img alt="" src="https://secure.gravatar.com/avatar/539b65bb73db63724e420c905b26fbd4?s=40&d=mm&r=g" srcset="https://secure.gravatar.com/avatar/539b65bb73db63724e420c905b26fbd4?s=80&d=mm&r=g 2x" class="avatar avatar-40 photo" height="40" width="40" loading="lazy" decoding="async"><cite class="fn">Phil</cite> <span class="says">says:</span>			</div>
+
+				
+				
+			<div class="comment-meta commentmetadata"><a href="../../../../2018/03/31/short-wave-listening-with-software-defined-radio/#comment-18">
+				April 4, 2018 at 6:02 pm					</a>
+									</div>
+
+				<div class="comment-body"><p>If you have access to the 80 meter band, can you use the SDR to transmit?</p>
+</div>
+
+				<div class="reply">
+								</div>
+			</div>
+
+				</li>
+		<li class="comment byuser comment-author-joe bypostauthor odd alt thread-odd thread-alt depth-1" id="li-comment-19">
+		<div id="comment-19">
+			<div class="comment-author vcard">
+				<img alt="" src="https://secure.gravatar.com/avatar/5b6d9ca88fdbf4af61fd3c90527059ae?s=40&d=mm&r=g" srcset="https://secure.gravatar.com/avatar/5b6d9ca88fdbf4af61fd3c90527059ae?s=80&d=mm&r=g 2x" class="avatar avatar-40 photo" height="40" width="40" loading="lazy" decoding="async"><cite class="fn">joe</cite> <span class="says">says:</span>			</div>
+
+				
+				
+			<div class="comment-meta commentmetadata"><a href="../../../../2018/03/31/short-wave-listening-with-software-defined-radio/#comment-19">
+				April 5, 2018 at 12:32 am					</a>
+									</div>
+
+				<div class="comment-body"><p>The RTL-SDR dongles are receive only as well as some SDR applications themselves are receive only. But SDR technology as a whole can be used to transmit and receive. Just need the right hardware/software combo.</p>
+</div>
+
+				<div class="reply">
+								</div>
+			</div>
+
+				</li>
+		<li class="comment even thread-even depth-1" id="li-comment-993">
+		<div id="comment-993">
+			<div class="comment-author vcard">
+				<img alt="" src="https://secure.gravatar.com/avatar/1da0130498450e866af2276d8f846d3d?s=40&d=mm&r=g" srcset="https://secure.gravatar.com/avatar/1da0130498450e866af2276d8f846d3d?s=80&d=mm&r=g 2x" class="avatar avatar-40 photo" height="40" width="40" loading="lazy" decoding="async"><cite class="fn">Forrest</cite> <span class="says">says:</span>			</div>
+
+				
+				
+			<div class="comment-meta commentmetadata"><a href="../../../../2018/03/31/short-wave-listening-with-software-defined-radio/#comment-993">
+				December 19, 2019 at 1:14 pm					</a>
+									</div>
+
+				<div class="comment-body"><p>Thanks for the article, if you still miss your old Hallicrafters you can pick one up for about $50:<br><a href="https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2380057.m570.l1313.TR0.TRC0.A0.H0.TRS5&_nkw=Hallicrafters+S-120A&_sacat=0" rel="nofollow ugc">https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2380057.m570.l1313.TR0.TRC0.A0.H0.TRS5&_nkw=Hallicrafters+S-120A&_sacat=0</a></p>
+<p>Have a great day!</p>
+</div>
+
+				<div class="reply">
+								</div>
+			</div>
+
+				</li>
+		<li class="comment byuser comment-author-joe bypostauthor odd alt thread-odd thread-alt depth-1" id="li-comment-1001">
+		<div id="comment-1001">
+			<div class="comment-author vcard">
+				<img alt="" src="https://secure.gravatar.com/avatar/5b6d9ca88fdbf4af61fd3c90527059ae?s=40&d=mm&r=g" srcset="https://secure.gravatar.com/avatar/5b6d9ca88fdbf4af61fd3c90527059ae?s=80&d=mm&r=g 2x" class="avatar avatar-40 photo" height="40" width="40" loading="lazy" decoding="async"><cite class="fn">joe</cite> <span class="says">says:</span>			</div>
+
+				
+				
+			<div class="comment-meta commentmetadata"><a href="../../../../2018/03/31/short-wave-listening-with-software-defined-radio/#comment-1001">
+				December 22, 2019 at 5:35 am					</a>
+									</div>
+
+				<div class="comment-body"><p>Thank you very much. I end up finding one.</p>
+</div>
+
+				<div class="reply">
+								</div>
+			</div>
+
+				</li>
+			</ol><p class="nocomments">Comments are closed.</p>
+	
+
+
+</div>
+
+	
+			</div>
+		</div>
+
+
+		<div id="primary" class="widget-area" role="complementary">
+			<ul class="xoxo"><li id="recent-posts-3" class="widget-container widget_recent_entries">
+		<h3 class="widget-title">Recent Posts</h3>
+		<ul><li>
+					<a href="../../../../2021/10/18/from-swl-to-sigint/index.html">From SWL to SIGINT</a>
+									</li>
+											<li>
+					<a href="../../../../2021/10/13/the-future-of-amateur-radio-is-with-our-youth-not/index.html">The Future of Amateur Radio is with our youth  . . . not!</a>
+									</li>
+											<li>
+					<a href="../../../../2021/04/11/heart-still-beating/index.html">The Heart of Amateur Radio is still beating</a>
+									</li>
+											<li>
+					<a href="../../../../2020/01/20/ham-radio-is-dead/index.html">Ham Radio is Dead, Long Live Amateur Radio!</a>
+									</li>
+											<li>
+					<a href="../../../../2018/12/27/packet-radio-connected-modes-with-the-baofeng-uv-5r/index.html">Packet Radio connected-modes with the Baofeng UV-5R (Updated February 7, 2020)</a>
+									</li>
+											<li>
+					<a href="../../../../2018/11/09/demonstrating-amateur-radio-digital-modes-with-simple-vhf-uhf-digital-stations-part-2/index.html">Demonstrating Amateur Radio Digital Modes with simple VHF/UHF Digital Stations (Part 2)</a>
+									</li>
+											<li>
+					<a href="../../../../2018/07/30/amateur-radio-hope-xii-epilogue/index.html">Amateur Radio @ HOPE XII – Epilogue</a>
+									</li>
+											<li>
+					<a href="../../../../2018/07/19/amateur-radio-hope-xii/index.html">Amateur Radio @ HOPE XII</a>
+									</li>
+											<li>
+					<a href="../../../../2018/04/23/digital-modes-with-vhfuhf_1/index.html">Demonstrating Amateur Radio Digital Modes with simple VHF/UHF Digital Stations (Part 1)</a>
+									</li>
+											<li>
+					<a href="../../../../2018/04/17/decoding-digital-modes-with-software-defined-radio/index.html">Decoding Digital Modes with Software Defined Radio</a>
+									</li>
+											<li>
+					<a href="../../../../2018/04/06/cross-platform-experiments-with-software-defined-radio/index.html">Cross-platform experiments with Software Defined Radio</a>
+									</li>
+					</ul></li><li id="categories-3" class="widget-container widget_categories"><h3 class="widget-title">Categories</h3>
+			<ul><li class="cat-item cat-item-2"><a href="../../../../category/amateur-radio/index.html">Amateur Radio</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="../../../../category/cloud/index.html">Cloud</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="../../../../category/ramblings/index.html">Ramblings</a>
+</li>
+			</ul></li><li id="archives-3" class="widget-container widget_archive"><h3 class="widget-title">Archives</h3>
+			<ul><li><a href="../../../../2021/10/index.html">October 2021</a></li>
+	<li><a href="../../../../2021/04/index.html">April 2021</a></li>
+	<li><a href="../../../../2020/01/index.html">January 2020</a></li>
+	<li><a href="../../../../2018/12/index.html">December 2018</a></li>
+	<li><a href="../../../../2018/11/index.html">November 2018</a></li>
+	<li><a href="../../../../2018/07/index.html">July 2018</a></li>
+	<li><a href="../../../../2018/04/index.html">April 2018</a></li>
+	<li><a href="../../../../2018/03/index.html">March 2018</a></li>
+	<li><a href="../../../../2017/09/index.html">September 2017</a></li>
+	<li><a href="../../../../2016/11/index.html">November 2016</a></li>
+	<li><a href="../../../../2016/08/index.html">August 2016</a></li>
+	<li><a href="../../../../2014/09/index.html">September 2014</a></li>
+	<li><a href="../../../../2014/08/index.html">August 2014</a></li>
+			</ul></li><li id="calendar-2" class="widget-container widget_calendar"><div id="calendar_wrap" class="calendar_wrap"><table id="wp-calendar" class="wp-calendar-table"><caption>March 2018</caption>
+	<thead><tr><th scope="col" title="Monday">M</th>
+		<th scope="col" title="Tuesday">T</th>
+		<th scope="col" title="Wednesday">W</th>
+		<th scope="col" title="Thursday">T</th>
+		<th scope="col" title="Friday">F</th>
+		<th scope="col" title="Saturday">S</th>
+		<th scope="col" title="Sunday">S</th>
+	</tr></thead><tbody><tr><td colspan="3" class="pad"> </td><td>1</td><td>2</td><td>3</td><td>4</td>
+	</tr><tr><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td>
+	</tr><tr><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td>
+	</tr><tr><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td>
+	</tr><tr><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td><td><a href="../../../../2018/03/31/index.html" aria-label="Posts published on March 31, 2018">31</a></td>
+		<td class="pad" colspan="1"> </td>
+	</tr></tbody></table><nav aria-label="Previous and next months" class="wp-calendar-nav"><span class="wp-calendar-nav-prev"><a href="../../../../2017/09/index.html">« Sep</a></span>
+		<span class="pad"> </span>
+		<span class="wp-calendar-nav-next"><a href="../../../../2018/04/index.html">Apr »</a></span>
+	</nav></div></li>			</ul></div>
+
+	</div>
+
+	<div id="footer" role="contentinfo">
+		<div id="colophon">
+
+
+
+			<div id="site-info">
+				<a href="../../../../index.html" rel="home">
+					Joe Cupano				</a>
+							</div>
+
+			<div id="site-generator">
+								<a href="https://wordpress.org/" class="imprint" title="Semantic Personal Publishing Platform">
+					Proudly powered by WordPress.				</a>
+			</div>
+
+		</div>
+	</div>
+
+</div>
+
+</body></html>
