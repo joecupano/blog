@@ -26,7 +26,7 @@ With that said, our parts list includes the following:
 
 My quest for the “quick win and taste of success” never includes what will I do for a case to put everything in. It is not until I have something working (consistently) and need to put it in something less precarious than sprawled across my bench that I figure out enclosure options. After working with candy containers and cigarillo tins I found the cheapest case to build has been plastic electric outlet boxes and covers from home improvement stores.
 
-![Project Case](/assets/cheap-case.jpg)
+![Project Case](/blog/assets/cheap-case.jpg)
 
 The materials are not perfect but for $2 USD and a glue gun for filling gaps it keeps things contained.
 
@@ -50,7 +50,7 @@ Once I had all the materials the build went as follows:
 2. For the first jumper, solder one end of a jumper wire into PTT GND. Snip the pin from the other end of that jumper wire and solder the wire to the side of C2 closest to PTT GND.
 3. For the second jumper, solder one end of a jumper wire into PTT HI and the other end to the open pin on the left bottom of T2 and above the left side of R2. That happens to be the same trace as MIC GND.
 
-![Easy Digi PTT Jumpers](/assets/easydigi-board-jumpers.jpg)
+![Easy Digi PTT Jumpers](/blog/assets/easydigi-board-jumpers.jpg)
 
 ### Serial and Connections
 
@@ -60,17 +60,17 @@ Once I had all the materials the build went as follows:
 4. Connect the USB-to-Serial cable to the PC and DB9 female connector.
 5. Connect the USB audio dongle to the PC and the 3.5mm male connectors to the USB audio dongle. AUDIO TO PC to MIC, AUDIO FROM PC to SPEAKER.
 
-![DB9 Connections](/assets/db9f-breakout-conn.jpg)
+![DB9 Connections](/blog/assets/db9f-breakout-conn.jpg)
 
 ### Reviewing the build
 
 To give you context of the build, here is a picture of my interface mounted in a plastic electric box case. Note I use brass PC motherboard standoffs for the board that are screwed into the case.
 
-![Baofeng Interface in makeshift case](/assets/baofeng-interface-wiring.jpg)
+![Baofeng Interface in makeshift case](/blog/assets/baofeng-interface-wiring.jpg)
 
 On the right side of the picture, you see three wires twisted together that go to the DB9 Female breakout with the thick black cable being the Baofeng speaker/mic cable. Left side of the board are the audio cables going to the USB audio dongle. Below is a wider screenshot. I tied the audio cables into a knot within the case to reduce any strain on the board.
 
-![Baofeng Interface complete](/assets/baofeng-interface-ptt_20181225.jpg)
+![Baofeng Interface complete](/blog/assets/baofeng-interface-ptt_20181225.jpg)
 
 ## Building from existing Digital Station setup from past posts
 
@@ -118,7 +118,7 @@ The Simple Interface I built is simple if you are a kit builder and not afraid o
 
 With the hardware setup, we need to reconfigure Dire Wolf to send a PTT signal to the serial port via the USB-to-Serial connection. In Linux, the USB-to-Serial will usually register as /dev/ttyUSB0 but in Windows it is less predictable showing up as COM4, COM5, etc. With the USB-to-serial attached you will need to go into Device Manager to find what COM port did it register as.
 
-You can refer to my [previous post](/assets/demonstrating-amateur-radio-digital-modes-with-simple-vhf-uhf-digital-stations-part-2/index.html) on installing the Dire Wolf software and initial configuration. For PTT to be enabled you need to edit **direwolf.conf** and add the line below relevant to your operating system then restart Dire Wolf.
+You can refer to my [previous post](/blog/assets/demonstrating-amateur-radio-digital-modes-with-simple-vhf-uhf-digital-stations-part-2/index.html) on installing the Dire Wolf software and initial configuration. For PTT to be enabled you need to edit **direwolf.conf** and add the line below relevant to your operating system then restart Dire Wolf.
 
 ```
 *For Windows*

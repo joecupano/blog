@@ -18,9 +18,9 @@ The heart of SVXLink is it being “a general purpose voice services system.” 
 
 VOX for signal detection can be tricky and is why a [carrier detect/COS/COS](http://www.repeater-builder.com/tech-info/repeater-term.html) is best practice when it comes to repeaters. So I was interested to find out that the QYT KT8900R had an undocumented feature that presents carrier detect on the microphone jack. I discovered this when I found out about it’s BTECH cousin published a document on [building a cross-band repeater](https://baofengtech.com/pdf/X-Band-Repeater-BTECH-Mobile.pdf) with two of the radios just using a custom wired cable CAT5 wire connected between the microphone jacks on each. Exploiting this capability could allow me to switch from VOX to carrier detect controlled by [GPIO pins](https://www.raspberrypi.org/documentation/usage/gpio-plus-and-raspi2/) on the Raspberry Pi.
 
-![QYT Cross-band Repeater Config using a custom wired CAT5 cable](/assets/5-qyt-crossconenct-300x109.png)
+![QYT Cross-band Repeater Config using a custom wired CAT5 cable](/blog/assets/5-qyt-crossconenct-300x109.png)
 
-![Cross connect wiring for Cross Band Repeater setup](/assets/repeater-xcable-300x157.png)
+![Cross connect wiring for Cross Band Repeater setup](/blog/assets/repeater-xcable-300x157.png)
 
 Switching to GPIO meant to key the transmitter I no longer needed the overhead of USB control, USB-to-Serial conversion, and the Easy DIGI interface. Instead I could have the GPIO pin drive a relay to set the required state of the PTT pin on the transmitter to key it.
 
@@ -32,15 +32,15 @@ SVXlink is well documented and requires taking the time to go through the [man p
 
 It works! Details are better described with the pictures that follow and the captions underneath them.
 
-![Repeater hardware showing radios and duplexer. CAT5 shown from each mic port whose pins carry COS, PTT, RX audio, and TX audio to the SVXlink Raspberry Pi controller via breadboard (next picture.)](/assets/wp-content/uploads/2017/09/repeater_hw-300x224.png)
+![Repeater hardware showing radios and duplexer. CAT5 shown from each mic port whose pins carry COS, PTT, RX audio, and TX audio to the SVXlink Raspberry Pi controller via breadboard (next picture.)](/blog/assets/repeater_hw-300x224.png)
 
-![SVXlink RPi controller connected to Pi-cobbler “breakout.” More components are on the breadboard for experimentation than actually used for testing. One push button was used to simulate carrier detect while another was used to simulate transmitter busy (PTT engaged.) Only one relay on the quad relay board is used though you see two wired. That relay is for PTT](/assets/repeater-controller-300x225.png)
+![SVXlink RPi controller connected to Pi-cobbler “breakout.” More components are on the breadboard for experimentation than actually used for testing. One push button was used to simulate carrier detect while another was used to simulate transmitter busy (PTT engaged.) Only one relay on the quad relay board is used though you see two wired. That relay is for PTT](/blog/assets/repeater-controller-300x225.png)
 
-![SVXlink startup with EchoLink enabled. On startup SVXlink keys the repeater and sends the “long identification” whether configured as CW or voice. Does EchoLink work?](/assets/svxlink_1-300x236.png)
+![SVXlink startup with EchoLink enabled. On startup SVXlink keys the repeater and sends the “long identification” whether configured as CW or voice. Does EchoLink work?](/blog/assets/svxlink_1-300x236.png)
 
-![Yes it does – even with the CFG_TYPE variable error. (Never bothered to find out the error.) As you can see it reports an iPhone connected.](/assets/3-echolink-disconnect-300x233.png)
+![Yes it does – even with the CFG_TYPE variable error. (Never bothered to find out the error.) As you can see it reports an iPhone connected.](/blog/assets/3-echolink-disconnect-300x233.png)
 
-![And this is the iPhone that is connected to the repeater via EchoLink. This is an old iPhone 4 of mine hence you see it report no (cell) service. It is connecting via WiFi to the Internet.](/assets/photo-3-200x300.png)
+![And this is the iPhone that is connected to the repeater via EchoLink. This is an old iPhone 4 of mine hence you see it report no (cell) service. It is connecting via WiFi to the Internet.](/blog/assets/photo-3-200x300.png)
 
 ## Bells and Whistles
 

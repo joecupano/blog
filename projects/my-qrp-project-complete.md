@@ -14,7 +14,7 @@ Since the kit did not come with assembly instructions, I searched the web to see
 
 I decided to go with building the kit inside an Altoids tin at first but it did not have enough real estate for how and where I wanted to mount my connectors and switch. So I went with a cigar tin that was not as deep but had more length and width. Here are a few pictures.
 
-![QRP Kit Complete](/assets/xpixie2-qrp-j-300x225.jpg.pagespeed.ic.mTs_X7tx8T.jpg)
+![QRP Kit Complete](/blog/assets/xpixie2-qrp-j-300x225.jpg.pagespeed.ic.mTs_X7tx8T.jpg)
 
 As you view the tin case from left to right you will see a SPST toggle switch for power, a stereo connector for audio, a stereo connector for a key, and a RCA female connector for the antenna.
 
@@ -22,8 +22,8 @@ Though the audio is mono, I went with a stereo connector since they are designed
 
 For the antenna connection I went retro rather than using the evolving standard of SMA connections for small RF devices. Personally, I am tired of spending alot of money on pigtails for SMA to SO-239. It is cheaper to go with a Motorola female for the antenna connector as found in older radios from 60s and then a single adapter to go from RCA female to SO-239.
 
-![Inside QRP Kit](/assets/pixie2-qrp-open-j-300x225-300x225.jpg)
+![Inside QRP Kit](/blog/assets/pixie2-qrp-open-j-300x225-300x225.jpg)
 
 The PCB sits inside the tin case with plenty of electrical tape on the copper side to insure no shorting. The PCB floats freely so I just push it to one side to make space for the 9V battery.
 
-![Closer look inside QRP Kit](/assets/pixie2-qrp-close-j-300x225-
+![Closer look inside QRP Kit](/blog/assets/pixie2-qrp-close-j-300x225-
